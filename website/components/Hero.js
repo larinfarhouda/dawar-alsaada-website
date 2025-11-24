@@ -1,26 +1,37 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
+import Image from "next/image";
 
 export default function Hero() {
   const ref = useRef(null);
+  const shouldReduceMotion = useReducedMotion();
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", shouldReduceMotion ? "0%" : "50%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, shouldReduceMotion ? 1 : 0]);
 
   return (
     <section ref={ref} id="hero" className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-stone-900">
       {/* Parallax Background */}
       <motion.div
-        style={{ y, opacity }}
+        style={{ y: shouldReduceMotion ? 0 : y, opacity }}
         className="absolute inset-0 w-full h-full"
       >
-        <div className="absolute inset-0 bg-[url('/hero-bg.png')] bg-cover bg-center"></div>
+        <Image
+          src="/hero-bg.png"
+          alt="Dawar Al Saada"
+          fill
+          priority
+          quality={85}
+          className="object-cover"
+          sizes="100vw"
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-stone-50/90"></div>
       </motion.div>
 

@@ -2,9 +2,11 @@ import { Cairo } from "next/font/google";
 import "./globals.css";
 
 const cairo = Cairo({
-  subsets: ["arabic", "latin"],
-  variable: "--font-cairo",
+  subsets: ["arabic"],
+  weight: ["300", "400", "600", "700", "800"],
   display: "swap",
+  preload: true,
+  fallback: ["Arial", "sans-serif"],
 });
 
 export const metadata = {
