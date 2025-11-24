@@ -20,7 +20,7 @@ export default function Hero() {
         style={{ y, opacity }}
         className="absolute inset-0 w-full h-full"
       >
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center"></div>
+        <div className="absolute inset-0 bg-[url('/hero-bg.png')] bg-cover bg-center"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-stone-50/90"></div>
       </motion.div>
 
