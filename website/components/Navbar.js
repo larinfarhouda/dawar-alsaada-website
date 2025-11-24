@@ -71,31 +71,32 @@ export default function Navbar() {
                 </button>
             </div>
 
-            {/* Mobile Menu Overlay */}
-            <AnimatePresence>
-                {isOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        className="absolute top-full left-0 w-full bg-white shadow-xl md:hidden flex flex-col items-center py-8 gap-6 border-t border-stone-100"
-                    >
-                        {navLinks.map((link) => (
-                            <Link
-                                key={link.name}
-                                href={link.href}
-                                onClick={() => setIsOpen(false)}
-                                className="text-xl font-medium text-stone-700 hover:text-brand"
-                            >
-                                {link.name}
-                            </Link>
-                        ))}
-                        <button className="bg-brand hover:bg-brand/90 text-white px-8 py-3 rounded-full font-bold shadow-md w-3/4">
-                            احجز الآن
-                        </button>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            {/* Mobile Menu */}
+            <motion.div
+                initial={false}
+                animate={isOpen ? "open" : "closed"}
+                variants={{
+                    open: { opacity: 1, height: "auto" },
+                    closed: { opacity: 0, height: 0 }
+                }}
+                className="md:hidden overflow-hidden"
+            >
+                <div className="px-4 pt-4 pb-6 space-y-2 bg-white/95 backdrop-blur-md">
+                    {navLinks.map((link) => (
+                        <a
+                            key={link.name}
+                            href={link.href}
+                            className="block px-4 py-3 text-stone-700 hover:text-brand hover:bg-brand/5 rounded-xl transition-all font-medium text-base"
+                            onClick={() => setIsOpen(false)}
+                        >
+                            {link.name}
+                        </a>
+                    ))}
+                    <button className="bg-brand hover:bg-brand/90 text-white px-8 py-3 rounded-full font-bold shadow-md w-full mt-4">
+                        احجز الآن
+                    </button>
+                </div>
+            </motion.div>
         </nav>
     );
 }

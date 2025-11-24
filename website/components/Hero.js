@@ -38,7 +38,7 @@ export default function Hero() {
         />
       </div>
 
-      <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
+      <div className="relative z-10 text-center px-4 sm:px-6 max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -48,12 +48,12 @@ export default function Hero() {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="inline-block mb-4 px-6 py-2 rounded-full border border-white/20 bg-white/5 backdrop-blur-md text-stone-200 text-sm tracking-wider"
+            className="inline-block mb-3 sm:mb-4 px-4 sm:px-6 py-1.5 sm:py-2 rounded-full border border-white/20 bg-white/5 backdrop-blur-md text-stone-200 text-xs sm:text-sm tracking-wider"
           >
             أصالة الطعم السعودي
           </motion.div>
 
-          <h1 className="text-6xl md:text-8xl font-bold text-white mb-8 leading-tight tracking-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-white mb-6 sm:mb-8 leading-tight tracking-tight px-2">
             من زان فطوره <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand to-amber-400">
               زانت اموره
@@ -64,7 +64,7 @@ export default function Hero() {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="text-xl md:text-3xl text-stone-200 mb-12 font-light max-w-3xl mx-auto leading-relaxed"
+            className="text-base sm:text-xl md:text-2xl lg:text-3xl text-stone-200 mb-8 sm:mb-12 font-light max-w-3xl mx-auto leading-relaxed px-4"
           >
             مرحباً بكم في دوار السعادة، حيث نلتقي لتجربة فريدة من نوعها في عالم الطعام السعودي
           </motion.p>
@@ -73,13 +73,13 @@ export default function Hero() {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.8 }}
-            className="flex flex-col md:flex-row gap-6 justify-center items-center"
+            className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center px-4"
           >
-            <button className="group relative px-8 py-4 bg-brand text-white text-lg font-bold rounded-full overflow-hidden shadow-lg shadow-brand/30 transition-all hover:scale-105 hover:shadow-brand/50">
+            <button className="group relative w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-brand text-white text-base sm:text-lg font-bold rounded-full overflow-hidden shadow-lg shadow-brand/30 transition-all hover:scale-105 hover:shadow-brand/50">
               <span className="relative z-10">تصفح القائمة</span>
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
             </button>
-            <button className="group px-8 py-4 bg-transparent border border-white/30 text-white text-lg font-bold rounded-full backdrop-blur-sm transition-all hover:bg-white/10 hover:border-white/60">
+            <button className="group w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-transparent border border-white/30 text-white text-base sm:text-lg font-bold rounded-full backdrop-blur-sm transition-all hover:bg-white/10 hover:border-white/60">
               احجز طاولتك
             </button>
           </motion.div>

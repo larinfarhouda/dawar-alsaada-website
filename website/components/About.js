@@ -19,29 +19,29 @@ export default function About() {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
-                        className="lg:w-1/2 text-right"
+                        className="lg:w-1/2 text-right px-4 sm:px-0"
                     >
-                        <div className="inline-flex items-center gap-2 mb-4">
-                            <span className="w-12 h-1 bg-brand rounded-full"></span>
-                            <h2 className="text-brand font-bold text-lg tracking-wide">قصتنا اللذيذة</h2>
+                        <div className="inline-flex items-center gap-2 mb-3 sm:mb-4">
+                            <span className="w-8 sm:w-12 h-1 bg-brand rounded-full"></span>
+                            <h2 className="text-brand font-bold text-base sm:text-lg tracking-wide">قصتنا اللذيذة</h2>
                         </div>
 
-                        <h3 className="text-4xl md:text-6xl font-bold text-stone-900 mb-8 leading-tight">
+                        <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-stone-900 mb-6 sm:mb-8 leading-tight">
                             أكثر من مجرد مطعم، <br />
                             <span className="relative inline-block">
                                 <span className="relative z-10">تجربة سعودية أصيلة</span>
-                                <span className="absolute bottom-2 left-0 w-full h-3 bg-brand/20 -rotate-1"></span>
+                                <span className="absolute bottom-1 sm:bottom-2 left-0 w-full h-2 sm:h-3 bg-brand/20 -rotate-1"></span>
                             </span>
                         </h3>
 
-                        <p className="text-stone-600 text-lg leading-relaxed mb-6 font-light">
+                        <p className="text-base sm:text-lg leading-relaxed mb-4 sm:mb-6 font-light text-stone-600">
                             في دوار السعادة، نؤمن إن الطعم يبدأ من الفكرة. منذ انطلاقتنا عام 2021، اخترنا نكون أكثر من مجرد مطعم—اخترنا نكون تجربة سعودية تمشي مع روح اليوم، وتتماشى مع رؤية 2030.
                         </p>
-                        <p className="text-stone-600 text-lg leading-relaxed mb-10 font-light">
+                        <p className="text-base sm:text-lg leading-relaxed mb-8 sm:mb-10 font-light text-stone-600">
                             بنينا استراتيجيتنا على الجرأة والمرونة، واستقطبنا أفضل الكفاءات لنخلق تجربة فريدة بطابع سعودي أصيل ولمسة حديثة. انتشارنا السريع ما هو صدفة، بل نتيجة شغف بالتطوير.
                         </p>
 
-                        <div className="grid grid-cols-3 gap-8 border-t border-stone-200 pt-8">
+                        <div className="grid grid-cols-3 gap-4 sm:gap-8 border-t border-stone-200 pt-6 sm:pt-8">
                             {[
                                 { number: "2021", label: "سنة التأسيس" },
                                 { number: "+20", label: "صنف مميز" },
@@ -55,8 +55,8 @@ export default function About() {
                                     transition={{ delay: 0.2 + index * 0.1, duration: 0.5 }}
                                     className="text-center lg:text-right"
                                 >
-                                    <span className="block text-4xl font-bold text-brand mb-2">{stat.number}</span>
-                                    <span className="text-stone-500 font-medium">{stat.label}</span>
+                                    <span className="block text-3xl sm:text-4xl font-bold text-brand mb-1 sm:mb-2">{stat.number}</span>
+                                    <span className="text-stone-500 font-medium text-sm sm:text-base">{stat.label}</span>
                                 </motion.div>
                             ))}
                         </div>
