@@ -77,7 +77,7 @@ export default function About() {
                                 transition={{ duration: 0.5 }}
                                 className="absolute top-0 right-0 w-3/4 h-3/4 rounded-[2rem] overflow-hidden shadow-2xl z-20 border-4 border-white"
                             >
-                                <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?q=80&w=1000&auto=format&fit=crop" alt="Food 1" className="object-cover w-full h-full" />
+                                <img src="https://scontent.cdninstagram.com/v/t51.75761-15/498926087_18056457053337390_5391886226547738169_n.webp?_nc_cat=110&ig_cache_key=MzYzNTE0NTUxMDQ2NjM2OTg5Mw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjExNTJ4MTQ0MC5zZHIuQzMifQ%3D%3D&_nc_ohc=Ky2QnhMZlucQ7kNvwF9n1M4&_nc_oc=AdliN0aAOXKUdDNEtegyqleaJLsRnL_iUZz8xtlu415oXq67ZI7ndGUZMpjy2FhDDq4&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=N713SqSOkZfkN_f_W7wQ7Q&oh=00_AfhDa1wUpJVSe6I9ZOoMxu7JpSP2X02hwgXLsaIcWzFFXA&oe=692A77B8" alt="Food 1" className="object-cover w-full h-full" />
                             </motion.div>
 
                             {/* Secondary Image */}
@@ -86,12 +86,12 @@ export default function About() {
                                 transition={{ duration: 0.5 }}
                                 className="absolute bottom-0 left-0 w-2/3 h-2/3 rounded-[2rem] overflow-hidden shadow-2xl z-30 border-4 border-white"
                             >
-                                <img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?q=80&w=1000&auto=format&fit=crop" alt="Chef" className="object-cover w-full h-full" />
+                                <img src="https://scontent.cdninstagram.com/v/t51.75761-15/491443218_18055361894337390_6726320157998689992_n.webp?stp=dst-webp_p720x720&_nc_cat=100&ig_cache_key=MzYyNzA3NTEzNTQwMDcwMTk0Mg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjExNTJ4MTQ0MC5zZHIuQzMifQ%3D%3D&_nc_ohc=XcuWyaJhUIQQ7kNvwHIOkvk&_nc_oc=AdnSjEE2LGhvykJ1kDglTJb2wFs3NYXCEMPUj6Efxfj-J1fHjUt9KrjozofQSD-JMJM&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=N713SqSOkZfkN_f_W7wQ7Q&oh=00_Afjy3r7EyNc51eYTSCD-0YC1USPf9FVQSYfQlqG-dsg5jQ&oe=692A55A7" alt="Chef" className="object-cover w-full h-full" />
                             </motion.div>
 
                             {/* Decorative Elements */}
                             <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-brand rounded-full z-40 flex items-center justify-center shadow-xl animate-bounce">
-                                <span className="text-white font-bold text-xl">منذ ٢٠٢١</span>
+                                <span className="text-white font-bold text-xl">+١٣٣ فرع </span>
                             </div>
 
                             <div className="absolute -bottom-4 -right-4 w-full h-full border-2 border-brand/20 rounded-[2.5rem] z-10"></div>

@@ -9,7 +9,7 @@ const dishes = [
         name: "فطيرة الكبدة بالجبن الشهيرة",
         description: "وصفة أصلية وجبن مذاب، طعم لا يُنسى",
         price: "٢٢ ر.س",
-        image: "https://images.unsplash.com/photo-1582295529753-525f0869420d?q=80&w=1000&auto=format&fit=crop",
+        image: "https://d.dawar.sa/wp-content/uploads/2025/07/%D9%83%D8%A8%D8%AF%D8%A9-%D8%A8%D8%A7%D9%84%D8%AC%D8%A8%D9%86-1.png",
         rating: 4.9,
         popular: true
     },
@@ -18,7 +18,7 @@ const dishes = [
         name: "بوكس كرك ومراهيف",
         description: "استمتع بألذ مراهيف مع شاي الكرك الأصلي",
         price: "٤٥ ر.س",
-        image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1000&auto=format&fit=crop",
+        image: "https://d.dawar.sa/wp-content/uploads/2025/07/%D8%A8%D9%88%D9%83%D8%B3-%D9%83%D8%B1%D9%83-%D9%88%D9%85%D8%B1%D8%A7%D9%87%D9%8A%D9%81.png",
         rating: 4.8,
         popular: false
     },
@@ -27,7 +27,7 @@ const dishes = [
         name: "شكشوكة جبن",
         description: "بيض طازج مع الطماطم والجبن السائل",
         price: "١٨ ر.س",
-        image: "https://images.unsplash.com/photo-1590412200988-a436970781fa?q=80&w=1000&auto=format&fit=crop",
+        image: "https://d.dawar.sa/wp-content/uploads/2025/07/%D8%B4%D9%83%D8%B4%D9%88%D9%83%D8%A9-%D8%A8%D8%A7%D9%84%D8%AC%D8%A8%D9%86.png",
         rating: 4.7,
         popular: false
     },

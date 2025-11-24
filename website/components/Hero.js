@@ -31,6 +31,7 @@ export default function Hero() {
           quality={85}
           className="object-cover"
           sizes="100vw"
+          unoptimized
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-stone-50/90"></div>
       </motion.div>
