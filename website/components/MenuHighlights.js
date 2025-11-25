@@ -59,11 +59,11 @@ export default function MenuHighlights() {
                     {dishes.map((dish, index) => (
                         <motion.div
                             key={dish.id}
-                            initial={{ opacity: 0, y: 30 }}
+                            initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.2, duration: 0.6 }}
-                            className="group relative bg-white rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 flex flex-col h-full justify-between"
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                            className="group relative bg-white rounded-[2rem] overflow-hidden shadow-lg md:hover:shadow-2xl transition-shadow duration-300 flex flex-col h-full justify-between"
                         >
                             {dish.popular && (
                                 <div className="absolute top-6 left-6 z-20 bg-brand text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg">
@@ -72,13 +72,13 @@ export default function MenuHighlights() {
                             )}
 
                             <div className="h-48 md:h-72 overflow-hidden relative">
-                                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10"></div>
+                                <div className="absolute inset-0 bg-black/20 md:group-hover:bg-black/0 transition-colors z-10"></div>
                                 <img
                                     src={dish.image}
                                     alt={dish.name}
-                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                    className="w-full h-full object-cover md:group-hover:scale-110 transition-transform duration-700"
                                 />
-                                <div className="absolute bottom-4 right-4 z-20 bg-white/95 backdrop-blur-md px-4 py-2 rounded-xl font-bold text-stone-900 shadow-lg flex items-center gap-1">
+                                <div className="absolute bottom-4 right-4 z-20 bg-white px-4 py-2 rounded-xl font-bold text-stone-900 shadow-md flex items-center gap-1">
                                     <Star size={16} className="text-amber-400 fill-amber-400" />
                                     <span>{dish.rating}</span>
                                 </div>
@@ -86,7 +86,7 @@ export default function MenuHighlights() {
 
                             <div className="p-4 md:p-8 text-center md:text-right relative">
                                 <div className="flex justify-between items-start mb-4">
-                                    <h4 className="text-2xl font-bold text-stone-800 group-hover:text-brand transition-colors">{dish.name}</h4>
+                                    <h4 className="text-2xl font-bold text-stone-800 md:group-hover:text-brand transition-colors">{dish.name}</h4>
                                 </div>
 
                                 <p className="text-stone-500 mb-8 line-clamp-2">{dish.description}</p>
