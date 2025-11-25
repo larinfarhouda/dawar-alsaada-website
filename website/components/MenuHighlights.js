@@ -3,41 +3,24 @@
 import { motion } from "framer-motion";
 import { Star, ArrowLeft } from "lucide-react";
 
-const dishes = [
-    {
-        id: 1,
-        name: "فطيرة الكبدة بالجبن الشهيرة",
-        description: "وصفة أصلية وجبن مذاب، طعم لا يُنسى",
-        price: "٢٢ ر.س",
-        image: "https://d.dawar.sa/wp-content/uploads/2025/07/%D9%83%D8%A8%D8%AF%D8%A9-%D8%A8%D8%A7%D9%84%D8%AC%D8%A8%D9%86-1.png",
-        rating: 4.9,
-        popular: true
-    },
-    {
-        id: 2,
-        name: "بوكس كرك ومراهيف",
-        description: "استمتع بألذ مراهيف مع شاي الكرك الأصلي",
-        price: "٤٥ ر.س",
-        image: "https://d.dawar.sa/wp-content/uploads/2025/07/%D8%A8%D9%88%D9%83%D8%B3-%D9%83%D8%B1%D9%83-%D9%88%D9%85%D8%B1%D8%A7%D9%87%D9%8A%D9%81.png",
-        rating: 4.8,
-        popular: false
-    },
-    {
-        id: 3,
-        name: "شكشوكة جبن",
-        description: "بيض طازج مع الطماطم والجبن السائل",
-        price: "١٨ ر.س",
-        image: "https://d.dawar.sa/wp-content/uploads/2025/07/%D8%B4%D9%83%D8%B4%D9%88%D9%83%D8%A9-%D8%A8%D8%A7%D9%84%D8%AC%D8%A8%D9%86.png",
-        rating: 4.7,
-        popular: false
-    },
-];
+export default function MenuHighlights({ items = [] }) {
+    // Use database items or fallback to empty array
+    const dishes = items.length > 0 ? items : [];
 
-export default function MenuHighlights() {
+    if (dishes.length === 0) {
+        return (
+            <section id="menu" className="py-12 md:py-24 bg-stone-100 relative">
+                <div className="container mx-auto px-4 md:px-8 text-center">
+                    <p className="text-stone-500">لا توجد عناصر قائمة حالياً.</p>
+                </div>
+            </section>
+        );
+    }
+
     return (
         <section id="menu" className="py-12 md:py-24 bg-stone-100 relative">
             {/* Background Pattern */}
-            <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/food.png')] pointer-events-none"></div>
+            <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/food.png')] pointer-events-none" />
 
             <div className="container mx-auto px-4 md:px-8 relative z-10">
                 <div className="text-center mb-16">
@@ -72,7 +55,7 @@ export default function MenuHighlights() {
                             )}
 
                             <div className="h-48 md:h-72 overflow-hidden relative">
-                                <div className="absolute inset-0 bg-black/20 md:group-hover:bg-black/0 transition-colors z-10"></div>
+                                <div className="absolute inset-0 bg-black/20 md:group-hover:bg-black/0 transition-colors z-10" />
                                 <img
                                     src={dish.image}
                                     alt={dish.name}
@@ -86,12 +69,12 @@ export default function MenuHighlights() {
 
                             <div className="p-4 md:p-8 text-center md:text-right relative">
                                 <div className="flex justify-between items-start mb-4">
-                                    <h4 className="text-2xl font-bold text-stone-800 md:group-hover:text-brand transition-colors">{dish.name}</h4>
+                                    <h4 className="text-2xl font-bold text-stone-800 md:group-hover:text-brand transition-colors">
+                                        {dish.name}
+                                    </h4>
+                                    <span className="text-brand font-bold text-lg">{dish.price}</span>
                                 </div>
-
                                 <p className="text-stone-500 mb-8 line-clamp-2">{dish.description}</p>
-
-
                             </div>
                         </motion.div>
                     ))}
