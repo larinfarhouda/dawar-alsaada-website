@@ -35,7 +35,7 @@ const dishes = [
 
 export default function MenuHighlights() {
     return (
-        <section id="menu" className="py-24 bg-stone-100 relative">
+        <section id="menu" className="py-12 md:py-24 bg-stone-100 relative">
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/food.png')] pointer-events-none"></div>
 
@@ -55,7 +55,7 @@ export default function MenuHighlights() {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 flex-1">
                     {dishes.map((dish, index) => (
                         <motion.div
                             key={dish.id}
@@ -63,7 +63,7 @@ export default function MenuHighlights() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.2, duration: 0.6 }}
-                            className="group relative bg-white rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
+                            className="group relative bg-white rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 flex flex-col h-full justify-between"
                         >
                             {dish.popular && (
                                 <div className="absolute top-6 left-6 z-20 bg-brand text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg">
@@ -71,7 +71,7 @@ export default function MenuHighlights() {
                                 </div>
                             )}
 
-                            <div className="h-72 overflow-hidden relative">
+                            <div className="h-48 md:h-72 overflow-hidden relative">
                                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10"></div>
                                 <img
                                     src={dish.image}
@@ -84,18 +84,14 @@ export default function MenuHighlights() {
                                 </div>
                             </div>
 
-                            <div className="p-8 text-right relative">
+                            <div className="p-4 md:p-8 text-center md:text-right relative">
                                 <div className="flex justify-between items-start mb-4">
                                     <h4 className="text-2xl font-bold text-stone-800 group-hover:text-brand transition-colors">{dish.name}</h4>
-                                    <span className="text-xl font-bold text-brand">{dish.price}</span>
                                 </div>
 
                                 <p className="text-stone-500 mb-8 line-clamp-2">{dish.description}</p>
 
-                                <button className="w-full py-4 bg-stone-50 text-stone-800 font-bold rounded-xl group-hover:bg-brand group-hover:text-white transition-all duration-300 flex items-center justify-center gap-2">
-                                    <span>أضف للطلب</span>
-                                    <ArrowLeft size={18} className="rotate-180 group-hover:-translate-x-1 transition-transform" />
-                                </button>
+
                             </div>
                         </motion.div>
                     ))}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Navigation, Phone, Clock } from "lucide-react";
 
@@ -34,7 +34,15 @@ const branchesData = {
 
 export default function Branches() {
     const [activeCity, setActiveCity] = useState("الرياض");
+    const [isMobile, setIsMobile] = useState(false);
     const cities = Object.keys(branchesData);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth <= 640);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     return (
         <section id="branches" className="py-24 bg-gradient-to-b from-white to-stone-50 relative overflow-hidden">
@@ -49,7 +57,8 @@ export default function Branches() {
                 <div className="text-center mb-16">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
+                        animate={isMobile ? { opacity: 1, y: 0 } : undefined}
                         viewport={{ once: true }}
                         className="inline-flex items-center gap-2 mb-4"
                     >
@@ -61,7 +70,7 @@ export default function Branches() {
                         أقرب مما <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand to-amber-500">تتخيل</span>
                     </h3>
                     <p className="text-stone-500 text-lg max-w-2xl mx-auto">
-                        نقدم لكم السعادة في أكثر من <span className="text-brand font-bold">٢٠ فرع</span> حول المملكة
+                        نقدم لكم السعادة في أكثر من <span className="text-brand font-bold">١٣٣ فرع</span> حول المملكة
                     </p>
                 </div>
 
@@ -71,9 +80,10 @@ export default function Branches() {
                         <motion.button
                             key={city}
                             initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
+                            whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
+                            animate={isMobile ? { opacity: 1, y: 0 } : undefined}
                             viewport={{ once: true }}
-                            transition={{ delay: index * 0.1 }}
+                            transition={isMobile ? { duration: 0 } : { delay: index * 0.1 }}
                             onClick={() => setActiveCity(city)}
                             className={`relative px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 overflow-hidden ${activeCity === city
                                 ? "text-white shadow-xl shadow-brand/30 scale-105"
@@ -84,7 +94,7 @@ export default function Branches() {
                                 <motion.div
                                     layoutId="activeTab"
                                     className="absolute inset-0 bg-gradient-to-r from-brand to-amber-500"
-                                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                                    transition={isMobile ? { duration: 0 } : { type: "spring", bounce: 0.2, duration: 0.6 }}
                                 />
                             )}
                             <span className="relative z-10">{city}</span>
@@ -97,18 +107,18 @@ export default function Branches() {
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={activeCity}
-                            initial={{ opacity: 0, scale: 0.95 }}
+                            initial={isMobile ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.95 }}
-                            transition={{ duration: 0.4 }}
+                            exit={isMobile ? { opacity: 0, scale: 1, transition: { duration: 0 } } : { opacity: 0, scale: 0.95 }}
+                            transition={isMobile ? { duration: 0 } : { duration: 0.4 }}
                             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
                         >
                             {branchesData[activeCity].map((branch, index) => (
                                 <motion.div
                                     key={index}
                                     initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: index * 0.1 }}
+                                    animate={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+                                    transition={isMobile ? { duration: 0 } : { delay: index * 0.1 }}
                                     className="group relative bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-stone-100 hover:border-brand/20 hover:-translate-y-2"
                                 >
                                     {/* Decorative Corner */}

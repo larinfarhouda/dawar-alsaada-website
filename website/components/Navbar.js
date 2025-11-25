@@ -10,7 +10,7 @@ const navLinks = [
     { name: "من نحن", href: "#about" },
     { name: "قائمة الطعام", href: "#menu" },
     { name: "الفروع", href: "#branches" },
-    { name: "الامتياز التجاري", href: "#franchise" },
+    // { name: "الامتياز التجاري", href: "#franchise" },
     { name: "وظائف", href: "#careers" },
     { name: "تواصل معنا", href: "#contact" },
 ];
@@ -37,12 +37,12 @@ export default function Navbar() {
             <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2 group">
-                    <div className="relative w-12 h-12">
+                    <div className="relative w-16 h-16">
                         <img src="/logo.png" alt="Dawar Al Saada Logo" className="object-contain w-full h-full" />
                     </div>
-                    <span className={`text-2xl font-bold ${scrolled ? "text-stone-800" : "text-stone-800 md:text-white"} transition-colors`}>
+                    {/* <span className={`text-2xl font-bold ${scrolled ? "text-stone-800" : "text-stone-800 md:text-white"} transition-colors`}>
                         دوار السعاده
-                    </span>
+                    </span> */}
                 </Link>
 
                 {/* Desktop Menu */}
@@ -57,9 +57,9 @@ export default function Navbar() {
                             {link.name}
                         </Link>
                     ))}
-                    <button className="bg-brand hover:bg-brand/90 text-white px-6 py-2 rounded-full font-bold transition-transform hover:scale-105 shadow-lg">
-                        احجز الآن
-                    </button>
+                    <Link href="#franchise" className="bg-brand hover:bg-brand/90 text-white px-6 py-2 rounded-full font-bold transition-transform hover:scale-105 shadow-lg">
+                        الامتياز التجاري
+                    </Link>
                 </div>
 
                 {/* Mobile Menu Button */}
@@ -92,9 +92,13 @@ export default function Navbar() {
                             {link.name}
                         </a>
                     ))}
-                    <button className="bg-brand hover:bg-brand/90 text-white px-8 py-3 rounded-full font-bold shadow-md w-full mt-4">
-                        احجز الآن
-                    </button>
+                    <Link
+                        href="#franchise"
+                        className="bg-brand hover:bg-brand/90 text-white px-8 py-3 rounded-full font-bold shadow-md w-full mt-4 block text-center"
+                        onClick={() => setIsOpen(false)}
+                    >
+                        الامتياز التجاري
+                    </Link>
                 </div>
             </motion.div>
         </nav>
