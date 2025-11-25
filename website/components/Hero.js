@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Hero() {
   const ref = useRef(null);
@@ -87,13 +88,13 @@ export default function Hero() {
             transition={{ delay: 0.6, duration: 0.8 }}
             className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center px-4"
           >
-            <button className="group relative w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-brand text-white text-base sm:text-lg font-bold rounded-full overflow-hidden shadow-lg shadow-brand/30 transition-all hover:scale-105 hover:shadow-brand/50">
+            <Link href="#menu" className="group relative w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-brand text-white text-base sm:text-lg font-bold rounded-full overflow-hidden shadow-lg shadow-brand/30 transition-all hover:scale-105 hover:shadow-brand/50 flex items-center justify-center">
               <span className="relative z-10">تصفح القائمة</span>
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-            </button>
-            <button className="group w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-transparent border border-white/30 text-white text-base sm:text-lg font-bold rounded-full backdrop-blur-sm transition-all hover:bg-white/10 hover:border-white/60">
-              احجز طاولتك
-            </button>
+            </Link>
+            <Link href="#branches" className="group w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-transparent border border-white/30 text-white text-base sm:text-lg font-bold rounded-full backdrop-blur-sm transition-all hover:bg-white/10 hover:border-white/60 flex items-center justify-center">
+              اكتشف فروعنا
+            </Link>
           </motion.div>
         </motion.div>
       </div>
