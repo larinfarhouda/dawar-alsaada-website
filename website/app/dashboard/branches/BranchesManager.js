@@ -4,8 +4,9 @@ import { useState } from 'react';
 import { createBranch, deleteBranch, updateBranch } from '@/app/actions/branches';
 import { Plus, Trash2, Edit2, X, MapPin, Phone, Navigation } from 'lucide-react';
 
-export default function BranchesManager({ initialBranches }) {
+export default function BranchesManager({ initialBranches, initialCities }) {
     const [branches, setBranches] = useState(initialBranches);
+    const [cities] = useState(initialCities);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingBranch, setEditingBranch] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -131,15 +132,14 @@ export default function BranchesManager({ initialBranches }) {
                                     <label className="block text-sm font-medium text-stone-700 mb-1">المدينة</label>
                                     <select
                                         name="city"
-                                        defaultValue={editingBranch?.city || "الرياض"}
+                                        defaultValue={editingBranch?.city || (cities.length > 0 ? cities[0].name : "")}
                                         className="w-full px-4 py-2 rounded-xl border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
                                     >
-                                        <option value="الرياض">الرياض</option>
-                                        <option value="جدة">جدة</option>
-                                        <option value="الدمام والخبر">الدمام والخبر</option>
-                                        <option value="مكة المكرمة">مكة المكرمة</option>
-                                        <option value="القصيم">القصيم</option>
-                                        <option value="أخرى">أخرى</option>
+                                        {cities.map((city) => (
+                                            <option key={city.id} value={city.name}>
+                                                {city.name}
+                                            </option>
+                                        ))}
                                     </select>
                                 </div>
                                 <div>

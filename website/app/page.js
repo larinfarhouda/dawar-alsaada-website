@@ -41,19 +41,46 @@ async function getBranches() {
   }
 }
 
+async function getCities() {
+  try {
+    const cities = await prisma.city.findMany({
+      orderBy: { createdAt: 'asc' }
+    });
+    return cities;
+  } catch (error) {
+    console.error("Error fetching cities:", error);
+    return [];
+  }
+}
+
+async function getActiveHeroMedia() {
+  try {
+    const media = await prisma.heroMedia.findFirst({
+      where: { isActive: true }
+    });
+    return media;
+  } catch (error) {
+    console.error("Error fetching hero media:", error);
+    return null;
+  }
+}
+
+
 export default async function Home() {
-  const [menuItems, branches] = await Promise.all([
+  const [menuItems, branches, cities, heroMedia] = await Promise.all([
     getMenuItems(),
-    getBranches()
+    getBranches(),
+    getCities(),
+    getActiveHeroMedia()
   ]);
 
   return (
     <main className="min-h-screen bg-stone-50">
       <Navbar />
-      <Hero />
+      <Hero media={heroMedia} />
       <About />
       <MenuHighlights items={menuItems} />
-      <Branches branches={branches} />
+      <Branches branches={branches} cities={cities} />
       <Franchise />
       <Careers />
       <Footer />

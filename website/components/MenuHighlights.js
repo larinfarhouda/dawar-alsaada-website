@@ -72,7 +72,7 @@ export default function MenuHighlights({ items = [] }) {
                                     <h4 className="text-2xl font-bold text-stone-800 md:group-hover:text-brand transition-colors">
                                         {dish.name}
                                     </h4>
-                                    <span className="text-brand font-bold text-lg">{dish.price}</span>
+                                    {/* <span className="text-brand font-bold text-lg">{dish.price}</span> */}
                                 </div>
                                 <p className="text-stone-500 mb-8 line-clamp-2">{dish.description}</p>
                             </div>

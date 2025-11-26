@@ -2,18 +2,50 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Upload, Send, CheckCircle, Briefcase, Award, TrendingUp } from "lucide-react";
+import { Upload, Send, CheckCircle, Briefcase } from "lucide-react";
+import { createApplication } from "@/app/actions/applications";
 
 export default function Careers() {
-    const [formStatus, setFormStatus] = useState("idle"); // idle, submitting, success
+    const [formStatus, setFormStatus] = useState("idle"); // idle, submitting, success, error
+    const [errorMessage, setErrorMessage] = useState("");
+    const [selectedFile, setSelectedFile] = useState(null);
 
-    const handleSubmit = (e) => {
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            // Validate file size (5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert("حجم الملف يجب أن يكون أقل من 5 ميجابايت");
+                e.target.value = "";
+                setSelectedFile(null);
+                return;
+            }
+            setSelectedFile(file);
+        }
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setFormStatus("submitting");
-        // Simulate API call
-        setTimeout(() => {
+        setErrorMessage("");
+
+        const formData = new FormData(e.target);
+
+        const result = await createApplication(formData);
+
+        if (result.success) {
             setFormStatus("success");
-        }, 1500);
+            setSelectedFile(null);
+        } else {
+            setFormStatus("error");
+            setErrorMessage(result.error || "حدث خطأ أثناء إرسال الطلب");
+        }
+    };
+
+    const resetForm = () => {
+        setFormStatus("idle");
+        setErrorMessage("");
+        setSelectedFile(null);
     };
 
     return (
@@ -99,7 +131,7 @@ export default function Careers() {
                                     <h4 className="text-2xl font-bold text-stone-800 mb-2">تم استلام طلبك بنجاح!</h4>
                                     <p className="text-stone-600">شكراً لاهتمامك بالانضمام إلينا. سنقوم بمراجعة طلبك والتواصل معك قريباً.</p>
                                     <button
-                                        onClick={() => setFormStatus("idle")}
+                                        onClick={resetForm}
                                         className="mt-8 text-brand font-bold hover:underline"
                                     >
                                         إرسال طلب آخر
@@ -107,12 +139,19 @@ export default function Careers() {
                                 </div>
                             ) : (
                                 <form onSubmit={handleSubmit} className="space-y-6">
+                                    {formStatus === "error" && (
+                                        <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-red-800">
+                                            {errorMessage}
+                                        </div>
+                                    )}
+
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
                                             <label htmlFor="name" className="text-stone-700 font-medium">الاسم الكامل</label>
                                             <input
                                                 type="text"
                                                 id="name"
+                                                name="name"
                                                 required
                                                 className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition-all"
                                                 placeholder="محمد أحمد"
@@ -123,6 +162,7 @@ export default function Careers() {
                                             <input
                                                 type="tel"
                                                 id="phone"
+                                                name="phone"
                                                 required
                                                 className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition-all"
                                                 placeholder="05xxxxxxxx"
@@ -135,6 +175,7 @@ export default function Careers() {
                                         <input
                                             type="email"
                                             id="email"
+                                            name="email"
                                             required
                                             className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition-all"
                                             placeholder="name@example.com"
@@ -145,6 +186,8 @@ export default function Careers() {
                                         <label htmlFor="position" className="text-stone-700 font-medium">الوظيفة المطلوبة</label>
                                         <select
                                             id="position"
+                                            name="position"
+                                            required
                                             className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition-all appearance-none"
                                         >
                                             <option value="">اختر الوظيفة...</option>
@@ -157,15 +200,21 @@ export default function Careers() {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <label className="text-stone-700 font-medium">السيرة الذاتية</label>
-                                        <div className="border-2 border-dashed border-stone-300 rounded-xl p-8 text-center hover:border-brand hover:bg-brand/5 transition-colors cursor-pointer group">
+                                        <label className="text-stone-700 font-medium">السيرة الذاتية (اختياري)</label>
+                                        <label className="border-2 border-dashed border-stone-300 rounded-xl p-8 text-center hover:border-brand hover:bg-brand/5 transition-colors cursor-pointer group block">
                                             <Upload className="mx-auto text-stone-400 group-hover:text-brand mb-2 transition-colors" />
                                             <p className="text-sm text-stone-500 group-hover:text-brand transition-colors">
-                                                اضغط لرفع الملف أو اسحب الملف هنا
+                                                {selectedFile ? selectedFile.name : "اضغط لرفع الملف أو اسحب الملف هنا"}
                                             </p>
                                             <p className="text-xs text-stone-400 mt-1">PDF, DOCX (Max 5MB)</p>
-                                            <input type="file" className="hidden" accept=".pdf,.doc,.docx" />
-                                        </div>
+                                            <input
+                                                type="file"
+                                                name="cv"
+                                                className="hidden"
+                                                accept=".pdf,.doc,.docx"
+                                                onChange={handleFileChange}
+                                            />
+                                        </label>
                                     </div>
 
                                     <button
@@ -188,6 +237,6 @@ export default function Careers() {
                     </div>
                 </div>
             </div>
-        </section >
+        </section>
     );
 }

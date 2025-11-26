@@ -3,17 +3,31 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Send, CheckCircle, Building2, TrendingUp, Users } from "lucide-react";
+import { createFranchiseRequest } from "@/app/actions/franchise";
 
 export default function Franchise() {
-    const [formStatus, setFormStatus] = useState("idle");
+    const [formStatus, setFormStatus] = useState("idle"); // idle, submitting, success, error
+    const [errorMessage, setErrorMessage] = useState("");
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setFormStatus("submitting");
-        // Simulate API call
-        setTimeout(() => {
+        setErrorMessage("");
+
+        const formData = new FormData(e.target);
+        const result = await createFranchiseRequest(formData);
+
+        if (result.success) {
             setFormStatus("success");
-        }, 1500);
+        } else {
+            setFormStatus("error");
+            setErrorMessage(result.error || "حدث خطأ أثناء إرسال الطلب");
+        }
+    };
+
+    const resetForm = () => {
+        setFormStatus("idle");
+        setErrorMessage("");
     };
 
     return (
@@ -89,7 +103,7 @@ export default function Franchise() {
                                     شكراً لاهتمامك بالاستثمار معنا. سيقوم فريق الامتياز التجاري بدراسة طلبك والتواصل معك قريباً.
                                 </p>
                                 <button
-                                    onClick={() => setFormStatus("idle")}
+                                    onClick={resetForm}
                                     className="text-brand font-bold hover:underline text-lg"
                                 >
                                     العودة للنموذج
@@ -99,30 +113,64 @@ export default function Franchise() {
                             <form onSubmit={handleSubmit} className="space-y-5">
                                 <h4 className="text-2xl font-bold mb-6 text-center">طلب الامتياز التجاري</h4>
 
+                                {formStatus === "error" && (
+                                    <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-red-800">
+                                        {errorMessage}
+                                    </div>
+                                )}
+
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                     <div className="space-y-2">
                                         <label className="text-sm font-bold text-stone-700">الاسم الكامل</label>
-                                        <input type="text" required className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none" placeholder="الاسم الثلاثي" />
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            required
+                                            className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
+                                            placeholder="الاسم الثلاثي"
+                                        />
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-sm font-bold text-stone-700">رقم الجوال</label>
-                                        <input type="tel" required className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none" placeholder="05xxxxxxxx" />
+                                        <input
+                                            type="tel"
+                                            name="phone"
+                                            required
+                                            className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
+                                            placeholder="05xxxxxxxx"
+                                        />
                                     </div>
                                 </div>
 
                                 <div className="space-y-2">
                                     <label className="text-sm font-bold text-stone-700">البريد الإلكتروني</label>
-                                    <input type="email" required className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none" placeholder="name@example.com" />
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        required
+                                        className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
+                                        placeholder="name@example.com"
+                                    />
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                     <div className="space-y-2">
                                         <label className="text-sm font-bold text-stone-700">المدينة المقترحة</label>
-                                        <input type="text" required className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none" placeholder="الرياض، جدة..." />
+                                        <input
+                                            type="text"
+                                            name="city"
+                                            required
+                                            className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
+                                            placeholder="الرياض، جدة..."
+                                        />
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-sm font-bold text-stone-700">الميزانية الاستثمارية</label>
-                                        <select className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none">
+                                        <select
+                                            name="budget"
+                                            required
+                                            className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
+                                        >
                                             <option value="">اختر الميزانية...</option>
                                             <option value="500k-1m">٥٠٠ ألف - ١ مليون ريال</option>
                                             <option value="1m-2m">١ مليون - ٢ مليون ريال</option>
@@ -135,11 +183,23 @@ export default function Franchise() {
                                     <label className="text-sm font-bold text-stone-700">هل لديك خبرة سابقة في المطاعم؟</label>
                                     <div className="flex gap-6 mt-2">
                                         <label className="flex items-center gap-2 cursor-pointer">
-                                            <input type="radio" name="experience" className="w-5 h-5 text-brand focus:ring-brand" />
+                                            <input
+                                                type="radio"
+                                                name="experience"
+                                                value="yes"
+                                                required
+                                                className="w-5 h-5 text-brand focus:ring-brand"
+                                            />
                                             <span>نعم</span>
                                         </label>
                                         <label className="flex items-center gap-2 cursor-pointer">
-                                            <input type="radio" name="experience" className="w-5 h-5 text-brand focus:ring-brand" />
+                                            <input
+                                                type="radio"
+                                                name="experience"
+                                                value="no"
+                                                required
+                                                className="w-5 h-5 text-brand focus:ring-brand"
+                                            />
                                             <span>لا</span>
                                         </label>
                                     </div>
@@ -148,7 +208,7 @@ export default function Franchise() {
                                 <button
                                     type="submit"
                                     disabled={formStatus === "submitting"}
-                                    className="w-full bg-brand hover:bg-brand/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-brand/20 transition-all flex items-center justify-center gap-2 mt-4"
+                                    className="w-full bg-brand hover:bg-brand/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-brand/20 transition-all flex items-center justify-center gap-2 mt-4 disabled:opacity-70 disabled:cursor-not-allowed"
                                 >
                                     {formStatus === "submitting" ? "جاري الإرسال..." : "إرسال طلب الامتياز"}
                                 </button>

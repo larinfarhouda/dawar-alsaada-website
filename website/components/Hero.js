@@ -5,7 +5,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Hero() {
+export default function Hero({ media }) {
   const ref = useRef(null);
   const shouldReduceMotion = useReducedMotion();
 
@@ -17,6 +17,10 @@ export default function Hero() {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", shouldReduceMotion ? "0%" : "50%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, shouldReduceMotion ? 1 : 0]);
 
+  // Use media from database or fallback to default
+  const mediaUrl = media?.url || "/hero-bg.png";
+  const mediaType = media?.type || "image";
+
   return (
     <section ref={ref} id="hero" className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-stone-900">
       {/* Parallax Background */}
@@ -24,16 +28,27 @@ export default function Hero() {
         style={{ y: shouldReduceMotion ? 0 : y, opacity }}
         className="absolute inset-0 w-full h-full"
       >
-        <Image
-          src="/hero-bg.png"
-          alt="Dawar Al Saada"
-          fill
-          priority
-          quality={85}
-          className="object-cover"
-          sizes="100vw"
-          unoptimized
-        />
+        {mediaType === "video" ? (
+          <video
+            src={mediaUrl}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <Image
+            src={mediaUrl}
+            alt="Dawar Al Saada"
+            fill
+            priority
+            quality={85}
+            className="object-cover"
+            sizes="100vw"
+            unoptimized
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-stone-50/90"></div>
       </motion.div>
 

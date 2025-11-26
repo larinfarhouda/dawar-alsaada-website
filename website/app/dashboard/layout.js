@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { LayoutDashboard, Menu, MapPin, FileText, LogOut } from 'lucide-react';
+import { LayoutDashboard, Menu, MapPin, FileText, LogOut, Building, Image, Store, Tag } from 'lucide-react';
 import DashboardAuth from './DashboardAuth';
 
 export default function DashboardLayout({ children }) {
@@ -11,10 +11,16 @@ export default function DashboardLayout({ children }) {
 
     const navItems = [
         { name: 'نظرة عامة', href: '/dashboard', icon: LayoutDashboard },
+        { name: 'خلفية الصفحة الرئيسية', href: '/dashboard/hero', icon: Image },
+        { name: 'التصنيفات', href: '/dashboard/categories', icon: Tag },
         { name: 'قائمة الطعام', href: '/dashboard/menu', icon: Menu },
         { name: 'الفروع', href: '/dashboard/branches', icon: MapPin },
+        { name: 'المدن', href: '/dashboard/cities', icon: Building },
         { name: 'طلبات التوظيف', href: '/dashboard/applications', icon: FileText },
+        { name: 'طلبات الامتياز', href: '/dashboard/franchise', icon: Store },
     ];
+
+
 
     function handleLogout() {
         localStorage.removeItem('isAuthenticated');
@@ -41,8 +47,8 @@ export default function DashboardLayout({ children }) {
                                     key={item.href}
                                     href={item.href}
                                     className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive
-                                            ? 'bg-brand text-white font-bold'
-                                            : 'text-stone-400 hover:bg-stone-800 hover:text-white'
+                                        ? 'bg-brand text-white font-bold'
+                                        : 'text-stone-400 hover:bg-stone-800 hover:text-white'
                                         }`}
                                 >
                                     <Icon size={20} />

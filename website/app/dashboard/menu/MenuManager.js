@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { createMenuItem, deleteMenuItem, updateMenuItem } from '@/app/actions/menu';
 import { Plus, Trash2, Edit2, X, Star, Image as ImageIcon } from 'lucide-react';
 
-export default function MenuManager({ initialItems }) {
+export default function MenuManager({ initialItems, categories }) {
     const [items, setItems] = useState(initialItems);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingItem, setEditingItem] = useState(null);
@@ -100,6 +100,12 @@ export default function MenuManager({ initialItems }) {
                                 </div>
                             </div>
 
+                            {item.category && (
+                                <span className="text-xs font-medium text-stone-500 bg-stone-100 px-2 py-1 rounded-md mb-2 inline-block">
+                                    {item.category.name}
+                                </span>
+                            )}
+
                             <p className="text-stone-500 text-sm mb-4 line-clamp-2 h-10">{item.description}</p>
 
                             <div className="flex justify-between items-center mt-4 pt-4 border-t border-stone-100">
@@ -147,6 +153,20 @@ export default function MenuManager({ initialItems }) {
                                     required
                                     className="w-full px-4 py-2 rounded-xl border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
                                 />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-stone-700 mb-1">التصنيف</label>
+                                <select
+                                    name="categoryId"
+                                    defaultValue={editingItem?.categoryId || ""}
+                                    className="w-full px-4 py-2 rounded-xl border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
+                                >
+                                    <option value="">اختر تصنيف</option>
+                                    {categories?.map(cat => (
+                                        <option key={cat.id} value={cat.id}>{cat.name}</option>
+                                    ))}
+                                </select>
                             </div>
 
                             <div>

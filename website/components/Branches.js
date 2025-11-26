@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Navigation, Phone, Clock } from "lucide-react";
 
-export default function Branches({ branches = [] }) {
+export default function Branches({ branches = [], cities = [] }) {
     // Group branches by city
     const grouped = branches.reduce((acc, branch) => {
         if (!acc[branch.city]) acc[branch.city] = [];
@@ -12,8 +12,12 @@ export default function Branches({ branches = [] }) {
         return acc;
     }, {});
 
-    const cities = Object.keys(grouped);
-    const [activeCity, setActiveCity] = useState(cities[0] || "");
+    // Use DB cities if available, otherwise fallback to derived cities
+    const cityNames = cities.length > 0
+        ? cities.map(c => c.name)
+        : Object.keys(grouped);
+
+    const [activeCity, setActiveCity] = useState(cityNames[0] || "");
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
@@ -54,7 +58,7 @@ export default function Branches({ branches = [] }) {
 
                 {/* City Tabs */}
                 <div className="flex flex-wrap justify-center gap-3 mb-16">
-                    {cities.map((city, index) => (
+                    {cityNames.map((city, index) => (
                         <motion.button
                             key={city}
                             initial={{ opacity: 0, y: 20 }}

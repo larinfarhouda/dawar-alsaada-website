@@ -7,6 +7,7 @@ export async function getMenuItems() {
     try {
         return await prisma.menuItem.findMany({
             orderBy: { createdAt: 'desc' },
+            include: { category: true },
         });
     } catch (error) {
         console.error("Failed to fetch menu items:", error);
@@ -21,6 +22,7 @@ export async function createMenuItem(formData) {
     const image = formData.get('image');
     const rating = parseFloat(formData.get('rating') || '0');
     const popular = formData.get('popular') === 'on';
+    const categoryId = formData.get('categoryId') ? parseInt(formData.get('categoryId')) : null;
 
     try {
         await prisma.menuItem.create({
@@ -31,6 +33,7 @@ export async function createMenuItem(formData) {
                 image,
                 rating,
                 popular,
+                categoryId,
             },
         });
         revalidatePath('/dashboard/menu');
@@ -61,6 +64,7 @@ export async function updateMenuItem(id, formData) {
     const image = formData.get('image');
     const rating = parseFloat(formData.get('rating') || '0');
     const popular = formData.get('popular') === 'on';
+    const categoryId = formData.get('categoryId') ? parseInt(formData.get('categoryId')) : null;
 
     try {
         await prisma.menuItem.update({
@@ -72,6 +76,7 @@ export async function updateMenuItem(id, formData) {
                 image,
                 rating,
                 popular,
+                categoryId,
             },
         });
         revalidatePath('/dashboard/menu');
