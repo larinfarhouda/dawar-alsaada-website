@@ -2,6 +2,8 @@ import { getMenuItems } from '@/app/actions/menu';
 import { getCategories } from '@/app/actions/categories';
 import MenuManager from './MenuManager';
 
+export const dynamic = 'force-dynamic';
+
 export default async function MenuPage() {
     const items = await getMenuItems();
     const categories = await getCategories();

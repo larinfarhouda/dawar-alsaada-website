@@ -1,6 +1,8 @@
 import prisma from '@/lib/prisma';
 import { LayoutDashboard, Menu, MapPin, FileText } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 async function getStats() {
     try {
         const [menuCount, branchCount, applicationCount] = await Promise.all([
