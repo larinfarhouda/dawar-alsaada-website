@@ -1,0 +1,40 @@
+name: Deploy to cPanel
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 2. Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: 3. Install Dependencies
+        run: npm ci
+
+      - name: 4. Build Project
+        run: npm run build
+
+      - name: 5. Prepare Deployment Files
+        run: |
+          mkdir deploy
+          cp -r .next public prisma package.json server.js next.config.mjs deploy/
+          # We do NOT copy .env (it stays on server) or node_modules (we install on server)
+
+      - name: 6. Upload to cPanel (FTP)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./deploy/
+          server-dir: ./repositories/dawar/ # CHANGE THIS to your actual app path on server
