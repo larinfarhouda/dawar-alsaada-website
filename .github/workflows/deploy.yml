@@ -24,7 +24,11 @@ jobs:
 
       - name: 4. Build Project
         working-directory: ./website
-        run: npm run build
+        env:
+          DATABASE_URL: "mysql://mock:mock@localhost:3306/mock"
+        run: |
+          npx prisma generate
+          npm run build
 
       - name: 5. Prepare Deployment Files
         run: |
