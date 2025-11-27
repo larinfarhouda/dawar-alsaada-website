@@ -19,16 +19,18 @@ jobs:
           node-version: '18'
 
       - name: 3. Install Dependencies
+        working-directory: ./website
         run: npm ci
 
       - name: 4. Build Project
+        working-directory: ./website
         run: npm run build
 
       - name: 5. Prepare Deployment Files
         run: |
-          mkdir deploy
-          cp -r .next public prisma package.json server.js next.config.mjs deploy/
-          # We do NOT copy .env (it stays on server) or node_modules (we install on server)
+          mkdir website/deploy
+          # Copy files from website/ folder to website/deploy/
+          cp -r website/.next website/public website/prisma website/package.json website/server.js website/next.config.mjs website/deploy/
 
       - name: 6. Upload to cPanel (FTP)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -36,5 +38,5 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./deploy/
-          server-dir: ./repositories/dawar/ # CHANGE THIS to your actual app path on server
+          local-dir: ./website/deploy/
+          server-dir: ./ # Assuming FTP account points to app root
