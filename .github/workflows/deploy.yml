@@ -25,6 +25,8 @@ jobs:
         npm ci
 
     - name: Build Application
+      env:
+        DATABASE_URL: "mysql://dummy:dummy@localhost:3306/dummy"
       run: |
         cd website
         npx prisma generate
