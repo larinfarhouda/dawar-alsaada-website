@@ -7,55 +7,53 @@ This means every time you push code to GitHub, it will automatically:
 2.  Upload the new files to your server.
 3.  Install dependencies and restart the server.
 
-## Prerequisites
+## 🔍 How to Get Your Credentials
 
-1.  **GitHub Repository**: Your code must be on GitHub.
-2.  **SSH Access**: You must have SSH access to your cPanel account.
-3.  **App Folder**: You should have already done the "Manual Deployment" at least once to create the folder (e.g., `/home/username/dawar-app`).
+You need 4 secrets for GitHub. Here is where to find them:
 
-## Step 1: Generate SSH Keys
+### 1. `SSH_HOST` (Server IP)
+*   Log in to **cPanel**.
+*   Look at the **"General Information"** box on the right sidebar.
+*   Copy the **"Shared IP Address"** (e.g., `172.105.8.156`).
 
-You need a special SSH key for GitHub to access your server without a password.
+### 2. `SSH_USERNAME`
+*   Log in to **cPanel**.
+*   Look at the **"Current User"** in the sidebar (e.g., `dawar`).
+*   *This is the same username you use to log in to cPanel.*
 
-1.  **On your local computer**, open a terminal and run:
-    ```bash
-    ssh-keygen -t rsa -b 4096 -C "github-actions" -f ./github_deploy_key
-    ```
-    *Press Enter for no passphrase.*
+### 3. `SSH_PORT`
+*   **Default:** `22`
+*   **FastComet / Namecheap / Bluehost:** Often use `21098` or `2222`.
+*   *Check the "SSH Access" page in cPanel or your welcome email.*
 
-2.  This creates two files:
-    *   `github_deploy_key` (Private Key)
-    *   `github_deploy_key.pub` (Public Key)
+### 4. `SSH_PRIVATE_KEY` (The Tricky Part)
+You need to generate a new Key Pair. Follow these steps exactly:
 
-## Step 2: Add Public Key to Server
-
-1.  **Copy the content** of `github_deploy_key.pub`.
-2.  **Log in to cPanel**.
-3.  Go to **SSH Access** -> **Manage SSH Keys** -> **Import Key**.
-4.  Paste the public key and name it (e.g., `github_deploy`).
-5.  **Authorize** the key: Go back to "Manage SSH Keys", find the key you just imported, click **Manage**, and then **Authorize**.
-
-*Alternatively, if you are already logged in via SSH:*
+#### Step A: Generate the Key (On Your Computer)
+Run this command in your VS Code terminal:
 ```bash
-# Paste the content of github_deploy_key.pub into authorized_keys
-nano ~/.ssh/authorized_keys
+ssh-keygen -t rsa -b 4096 -C "github-actions" -f ./github_deploy_key
 ```
+*   Press **Enter** when asked for a passphrase (leave it empty).
+*   This creates two files in your folder: `github_deploy_key` and `github_deploy_key.pub`.
 
-## Step 3: Configure GitHub Secrets
+#### Step B: Authorize the Key (On cPanel)
+1.  Open the `github_deploy_key.pub` file (Public Key) and copy **everything**.
+2.  Log in to **cPanel**.
+3.  Go to **Security** -> **SSH Access**.
+4.  Click **Manage SSH Keys**.
+5.  Click **Import Key**.
+6.  Paste your key into the **"Public Key"** box. Name it "github_deploy". Click Import.
+7.  **IMPORTANT:** Go back to the list, find "github_deploy", click **Manage**, and click **Authorize**.
 
-1.  Go to your repository on **GitHub**.
-2.  Click **Settings** -> **Secrets and variables** -> **Actions**.
-3.  Click **New repository secret**.
-4.  Add the following secrets:
+#### Step C: Add to GitHub (The Private Key)
+1.  Open the `github_deploy_key` file (Private Key) and copy **everything** (including `-----BEGIN OPENSSH PRIVATE KEY-----`).
+2.  Go to your GitHub Repo -> **Settings** -> **Secrets and variables** -> **Actions**.
+3.  Create a **New repository secret** named `SSH_PRIVATE_KEY` and paste the content.
 
-| Name | Value |
-| :--- | :--- |
-| `SSH_HOST` | Your server IP address (e.g., `123.45.67.89`) |
-| `SSH_USERNAME` | Your cPanel username |
-| `SSH_PORT` | Your SSH port (usually `22`, but check your host, e.g., `21098`) |
-| `SSH_PRIVATE_KEY` | The **entire content** of the `github_deploy_key` file you generated in Step 1. |
+---
 
-## Step 4: Push to Deploy
+## Step 5: Push to Deploy
 
 We have already created the workflow file for you at `.github/workflows/deploy.yml`.
 
