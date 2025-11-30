@@ -15,7 +15,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '20'
         cache: 'npm'
         cache-dependency-path: website/package-lock.json
 
@@ -58,6 +58,11 @@ jobs:
           # Load NVM (Node Version Manager)
           export NVM_DIR="$HOME/.nvm"
           [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          
+          # Ensure Node 20 is installed and used
+          nvm install 20
+          nvm use 20
+          nvm alias default 20
           
           # Navigate to app directory
           cd /home/${{ secrets.SSH_USERNAME }}/dawar-app
