@@ -27,6 +27,7 @@ jobs:
     - name: Build Application
       run: |
         cd website
+        npx prisma generate
         npm run build
 
     - name: Remove node_modules (to avoid uploading dev dependencies)
