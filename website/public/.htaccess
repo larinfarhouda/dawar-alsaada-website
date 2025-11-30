@@ -1,0 +1,23 @@
+# ----------------------------------------------------------------------
+# Reverse Proxy for Next.js on cPanel
+# ----------------------------------------------------------------------
+
+DirectoryIndex disabled
+RewriteEngine On
+
+# 1. Force HTTPS
+# Redirects all HTTP traffic to HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# 2. Serve Static Files Directly
+# If the requested file or directory exists in public_html, serve it directly.
+# This avoids sending requests for images, css, js, etc. to the Node app.
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+RewriteRule ^ - [L]
+
+# 3. Reverse Proxy to Node.js
+# Forward all other requests to the Node.js app running on port 3000.
+# Make sure your app is running: pm2 start server.js --name "dawar-website"
+RewriteRule ^(.*)$ http://127.0.0.1:3000/$1 [P,L]

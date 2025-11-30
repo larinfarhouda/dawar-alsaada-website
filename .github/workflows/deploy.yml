@@ -2,45 +2,72 @@ name: Deploy to cPanel
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 1. Checkout Code
-        uses: actions/checkout@v4
+    - name: Checkout Code
+      uses: actions/checkout@v4
 
-      - name: 2. Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: website/package-lock.json
 
-      - name: 3. Install Dependencies
-        working-directory: ./website
-        run: npm ci
+    - name: Install Dependencies
+      run: |
+        cd website
+        npm ci
 
-      - name: 4. Build Project
-        working-directory: ./website
-        env:
-          DATABASE_URL: "mysql://mock:mock@localhost:3306/mock"
-        run: |
-          npx prisma generate
-          npm run build
+    - name: Build Application
+      run: |
+        cd website
+        npm run build
 
-      - name: 5. Prepare Deployment Files
-        run: |
-          mkdir website/deploy
-          # Copy files from website/ folder to website/deploy/
-          cp -r website/.next website/public website/prisma website/package.json website/server.js website/next.config.mjs website/deploy/
+    - name: Remove node_modules (to avoid uploading dev dependencies)
+      run: rm -rf website/node_modules
 
-      - name: 6. Upload to cPanel (FTP)
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./website/deploy/
-          server-dir: ./ # Assuming FTP account points to app root
+    - name: Deploy Files via SSH
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        # Upload only necessary files for production
+        source: "website/.next,website/public,website/package.json,website/server.js,website/prisma,website/next.config.mjs"
+        target: "/home/${{ secrets.SSH_USERNAME }}/dawar-app"
+        # Remove the 'website/' prefix so files land directly in dawar-app
+        strip_components: 1
+        # Overwrite existing files
+        overwrite: true
+
+    - name: Install Dependencies & Restart Server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        script: |
+          # Load NVM (Node Version Manager)
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          
+          # Navigate to app directory
+          cd /home/${{ secrets.SSH_USERNAME }}/dawar-app
+          
+          # Install production dependencies
+          npm install --production
+          
+          # Run Database Migrations
+          npx prisma migrate deploy
+          
+          # Restart Application with PM2
+          pm2 restart dawar-website || pm2 start server.js --name "dawar-website"
+          pm2 save
