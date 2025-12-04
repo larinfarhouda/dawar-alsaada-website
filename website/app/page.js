@@ -3,6 +3,8 @@ import prisma from '@/lib/prisma';
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 
+export const dynamic = 'force-dynamic';
+
 // Lazy load components that can be server rendered
 const About = dynamic(() => import("@/components/About"), { ssr: true });
 const MenuHighlights = dynamic(() => import("@/components/MenuHighlights"), { ssr: true });
