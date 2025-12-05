@@ -14,6 +14,7 @@ const Footer = dynamicImport(() => import("@/components/Footer"), { ssr: true })
 import Branches from "@/components/Branches";
 import Franchise from "@/components/Franchise";
 import Careers from "@/components/Careers";
+import AppPromo from "@/components/AppPromo";
 
 async function getMenuItems() {
   try {
@@ -85,6 +86,7 @@ export default async function Home() {
       <Branches branches={branches} cities={cities} />
       <Franchise />
       <Careers />
+      <AppPromo />
       <Footer />
     </main>
   );
