@@ -1,13 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Optimize for shared hosting (low memory)
-  swcMinify: false,
   output: 'standalone',
   typescript: {
     ignoreBuildErrors: true,
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
   },
   images: {
     formats: ['image/avif', 'image/webp'],
@@ -19,10 +15,9 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === 'production',
   },
   experimental: {
-    // serverActions: {
-    //   bodySizeLimit: '50mb',
-    // },
-    // Disable heavy experimental features if crashing
+    serverActions: {
+      bodySizeLimit: '10mb',
+    },
   },
 };
 

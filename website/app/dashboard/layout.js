@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { LayoutDashboard, Menu, MapPin, FileText, LogOut, Building, Image, Store, Tag } from 'lucide-react';
+import { LayoutDashboard, Menu, MapPin, FileText, LogOut, Building, Image, Store, Tag, GalleryHorizontal } from 'lucide-react';
 import DashboardAuth from './DashboardAuth';
 
 export default function DashboardLayout({ children }) {
@@ -12,6 +12,7 @@ export default function DashboardLayout({ children }) {
     const navItems = [
         { name: 'نظرة عامة', href: '/dashboard', icon: LayoutDashboard },
         { name: 'خلفية الصفحة الرئيسية', href: '/dashboard/hero', icon: Image },
+        { name: 'صور "عن دوار السعادة"', href: '/dashboard/about-carousel', icon: GalleryHorizontal },
         { name: 'التصنيفات', href: '/dashboard/categories', icon: Tag },
         { name: 'قائمة الطعام', href: '/dashboard/menu', icon: Menu },
         { name: 'الفروع', href: '/dashboard/branches', icon: MapPin },

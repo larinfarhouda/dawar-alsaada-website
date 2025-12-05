@@ -1,8 +1,53 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState, useEffect, useMemo } from "react";
+import { getAboutCarouselImages } from "@/app/actions/about-carousel";
 
 export default function About() {
+    const [carouselImages, setCarouselImages] = useState([]);
+
+    useEffect(() => {
+        async function loadImages() {
+            try {
+                const result = await getAboutCarouselImages();
+                if (result.success) {
+                    setCarouselImages(result.data);
+                }
+            } catch (error) {
+                console.error("Failed to load carousel images:", error);
+            }
+        }
+        loadImages();
+    }, []);
+
+    // Prepare the infinite carousel items
+    const finalSlides = useMemo(() => {
+        if (!carouselImages || carouselImages.length === 0) return [];
+
+        // We need to ensure the list is wide enough to cover the screen width + buffer.
+        // We'll assume a very large screen width (e.g., 5000px) to be safe for all devices.
+        // We use a conservative estimate for item width to ensure we have ENOUGH items.
+        // Mobile item width (w-64 = 256px) + margin (mx-4 = 32px) = 288px.
+        // We'll use 250px to be safe (over-estimating the count is better than under-estimating).
+        const SAFE_ITEM_WIDTH = 250;
+        const MIN_TOTAL_WIDTH = 5000;
+
+        const currentTotalWidth = carouselImages.length * SAFE_ITEM_WIDTH;
+        let repeatCount = 1;
+
+        if (currentTotalWidth < MIN_TOTAL_WIDTH) {
+            repeatCount = Math.ceil(MIN_TOTAL_WIDTH / currentTotalWidth);
+        }
+
+        // Create the base list repeated enough times to fill the screen
+        const baseList = Array(repeatCount).fill(carouselImages).flat();
+
+        // Duplicate the base list ONCE to create the seamless loop.
+        // We will animate from x: 0% to x: -50%.
+        return [...baseList, ...baseList];
+    }, [carouselImages]);
+
     return (
         <section id="about" className="py-16 md:py-24 bg-stone-50 relative overflow-hidden">
             {/* Decorative Background */}
@@ -11,8 +56,7 @@ export default function About() {
                 <div className="absolute bottom-20 -left-20 w-60 h-60 md:w-80 md:h-80 bg-amber-500/5 rounded-full blur-3xl"></div>
             </div>
 
-            <div className="container mx-auto px-4 md:px-8 relative z-10">
-                {/* Changed layout to flex-col-reverse on mobile so image shows near text better, or keep flex-col for Text First */}
+            <div className="container mx-auto px-4 md:px-8 relative z-10 mb-16">
                 <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
 
                     {/* Text Content */}
@@ -73,10 +117,7 @@ export default function About() {
                         transition={{ duration: 0.8 }}
                         className="w-full lg:w-1/2 relative order-2 lg:order-2 mt-8 lg:mt-0"
                     >
-                        {/* Adjusted container height for mobile (h-[400px]) vs desktop */}
                         <div className="relative h-[400px] sm:h-[500px] md:h-[600px] w-full">
-
-                            {/* Main Image (Top Right) */}
                             <motion.div
                                 whileHover={{ scale: 1.02 }}
                                 transition={{ duration: 0.5 }}
@@ -85,7 +126,6 @@ export default function About() {
                                 <img src="https://scontent.cdninstagram.com/v/t51.75761-15/498926087_18056457053337390_5391886226547738169_n.webp?_nc_cat=110&ig_cache_key=MzYzNTE0NTUxMDQ2NjM2OTg5Mw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjExNTJ4MTQ0MC5zZHIuQzMifQ%3D%3D&_nc_ohc=Ky2QnhMZlucQ7kNvwF9n1M4&_nc_oc=AdliN0aAOXKUdDNEtegyqleaJLsRnL_iUZz8xtlu415oXq67ZI7ndGUZMpjy2FhDDq4&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=N713SqSOkZfkN_f_W7wQ7Q&oh=00_AfhDa1wUpJVSe6I9ZOoMxu7JpSP2X02hwgXLsaIcWzFFXA&oe=692A77B8" alt="Food presentation" className="object-cover w-full h-full" />
                             </motion.div>
 
-                            {/* Secondary Image (Bottom Left) */}
                             <motion.div
                                 whileHover={{ scale: 1.02 }}
                                 transition={{ duration: 0.5 }}
@@ -94,17 +134,50 @@ export default function About() {
                                 <img src="https://scontent.cdninstagram.com/v/t51.75761-15/491443218_18055361894337390_6726320157998689992_n.webp?stp=dst-webp_p720x720&_nc_cat=100&ig_cache_key=MzYyNzA3NTEzNTQwMDcwMTk0Mg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjExNTJ4MTQ0MC5zZHIuQzMifQ%3D%3D&_nc_ohc=XcuWyaJhUIQQ7kNvwHIOkvk&_nc_oc=AdnSjEE2LGhvykJ1kDglTJb2wFs3NYXCEMPUj6Efxfj-J1fHjUt9KrjozofQSD-JMJM&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=N713SqSOkZfkN_f_W7wQ7Q&oh=00_Afjy3r7EyNc51eYTSCD-0YC1USPf9FVQSYfQlqG-dsg5jQ&oe=692A55A7" alt="Chef preparing food" className="object-cover w-full h-full" />
                             </motion.div>
 
-                            {/* Decorative Badge - Adjusted size for mobile */}
                             <div className="absolute top-1/2 left-[15%] sm:left-1/4 -translate-x-1/2 -translate-y-1/2 w-20 h-20 sm:w-24 sm:h-24 bg-brand rounded-full z-40 flex items-center justify-center shadow-xl animate-bounce border-2 border-white">
                                 <span className="text-white font-bold text-sm sm:text-xl text-center leading-tight">+١٥٥<br />فرع </span>
                             </div>
 
-                            {/* Border Outline Frame */}
                             <div className="absolute -bottom-4 -right-4 w-[90%] h-[90%] border-2 border-brand/20 rounded-[2.5rem] z-10 hidden sm:block"></div>
                         </div>
                     </motion.div>
                 </div>
             </div>
+
+            {/* Auto Scrolling Carousel */}
+            {finalSlides.length > 0 && (
+                <div className="w-full overflow-hidden py-8 border-t border-stone-200/50 bg-white/50 backdrop-blur-sm">
+                    <motion.div
+                        className="flex w-max"
+                        animate={{ x: ["0%", "-50%"] }}
+                        transition={{
+                            x: {
+                                repeat: Infinity,
+                                repeatType: "loop",
+                                duration: 40, // Slower speed for better viewing
+                                ease: "linear",
+                            },
+                        }}
+                        whileHover={{ animationPlayState: "paused" }} // Note: Framer motion doesn't support this directly via prop, see style below
+                        style={{ willChange: "transform" }}
+                    >
+                        {finalSlides.map((item, index) => (
+                            <div
+                                key={`${item.id}-${index}`}
+                                className="relative w-64 md:w-80 h-48 md:h-60 flex-shrink-0 mx-4 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group"
+                            >
+                                <img
+                                    src={item.image}
+                                    alt="About gallery"
+                                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                                />
+                                {/* Optional overlay on hover */}
+                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300"></div>
+                            </div>
+                        ))}
+                    </motion.div>
+                </div>
+            )}
         </section>
     );
 }
