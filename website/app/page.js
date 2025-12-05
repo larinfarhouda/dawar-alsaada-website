@@ -1,4 +1,4 @@
-import dynamic from 'next/dynamic';
+import dynamicImport from 'next/dynamic';
 import prisma from '@/lib/prisma';
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
@@ -6,9 +6,9 @@ import Hero from "@/components/Hero";
 export const dynamic = 'force-dynamic';
 
 // Lazy load components that can be server rendered
-const About = dynamic(() => import("@/components/About"), { ssr: true });
-const MenuHighlights = dynamic(() => import("@/components/MenuHighlights"), { ssr: true });
-const Footer = dynamic(() => import("@/components/Footer"), { ssr: true });
+const About = dynamicImport(() => import("@/components/About"), { ssr: true });
+const MenuHighlights = dynamicImport(() => import("@/components/MenuHighlights"), { ssr: true });
+const Footer = dynamicImport(() => import("@/components/Footer"), { ssr: true });
 
 // Client components (must be imported directly)
 import Branches from "@/components/Branches";
