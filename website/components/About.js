@@ -146,10 +146,10 @@ export default function About() {
 
             {/* Auto Scrolling Carousel */}
             {finalSlides.length > 0 && (
-                <div className="w-full overflow-hidden py-8 border-t border-stone-200/50 bg-white/50 backdrop-blur-sm">
+                <div className="w-full overflow-hidden py-8 border-t border-stone-200/50 bg-white/50 backdrop-blur-sm" dir="ltr">
                     <motion.div
                         className="flex w-max"
-                        animate={{ x: ["0%", "-50%"] }}
+                        animate={{ x: ["-50%", "0%"] }}
                         transition={{
                             x: {
                                 repeat: Infinity,
