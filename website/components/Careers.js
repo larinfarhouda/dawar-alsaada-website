@@ -70,7 +70,7 @@ export default function Careers() {
                 </div>
 
                 <div className="container mx-auto px-4 md:px-8 relative z-10">
-                    <div className="flex flex-col md:flex-row gap-12 items-start">
+                    <div className="flex flex-col md:flex-row gap-12 items-stretch">
                         {/* Image/Info Side */}
                         <motion.div
                             initial={{ opacity: 0, x: 50 }}
@@ -79,7 +79,7 @@ export default function Careers() {
                             transition={{ duration: 0.8 }}
                             className="md:w-1/2 w-full"
                         >
-                            <div className="bg-stone-100 rounded-3xl p-8 md:p-12 relative overflow-hidden">
+                            <div className="bg-stone-100 rounded-3xl p-8 md:p-12 relative overflow-hidden h-full">
                                 <div className="relative z-10">
                                     <h4 className="text-2xl font-bold text-stone-800 mb-6">لماذا العمل معنا؟</h4>
                                     <ul className="space-y-4">

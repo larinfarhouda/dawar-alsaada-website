@@ -44,13 +44,14 @@ export default function Franchise() {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                     {/* Info Side */}
                     <motion.div
                         initial={{ opacity: 0, x: 50 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
+                        className="h-full flex flex-col justify-center"
                     >
                         <div className="grid grid-cols-1 gap-8">
                             <div className="bg-white/5 backdrop-blur-sm p-8 rounded-3xl border border-white/10 hover:border-brand/50 transition-colors">
@@ -91,7 +92,7 @@ export default function Franchise() {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
-                        className="bg-white rounded-3xl p-8 md:p-10 text-stone-800 shadow-2xl"
+                        className="bg-white rounded-3xl p-8 md:p-10 text-stone-800 shadow-2xl h-full flex flex-col justify-center"
                     >
                         {formStatus === "success" ? (
                             <div className="text-center py-12">
