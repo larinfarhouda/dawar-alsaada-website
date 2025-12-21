@@ -37,7 +37,7 @@ export default function Franchise() {
 
             <div className="container mx-auto px-4 md:px-8 relative z-10">
                 <div className="text-center mb-16">
-                    <h2 className="text-brand font-bold text-lg mb-2">الامتياز التجاري</h2>
+                    <h2 className="text-brand font-bold text-lg mb-6">الامتياز التجاري</h2>
                     <h3 className="text-4xl md:text-5xl font-bold text-white">كن شريكاً في النجاح</h3>
                     <p className="text-stone-400 mt-4 max-w-2xl mx-auto">
                         استثمر في علامة تجارية سعودية رائدة وحقق عوائد مجزية. انضم إلى قصة نجاح دوار السعادة.
@@ -51,37 +51,43 @@ export default function Franchise() {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
-                        className="h-full flex flex-col justify-center"
+                        className="h-full"
                     >
-                        <div className="grid grid-cols-1 gap-8">
-                            <div className="bg-white/5 backdrop-blur-sm p-8 rounded-3xl border border-white/10 hover:border-brand/50 transition-colors">
-                                <div className="bg-brand w-14 h-14 rounded-2xl flex items-center justify-center mb-6 text-white shadow-lg shadow-brand/20">
-                                    <TrendingUp size={32} />
+                        <div className="h-full flex flex-col gap-6">
+                            <div className="flex-1 bg-white/5 backdrop-blur-sm p-6 rounded-3xl border border-white/10 hover:border-brand/50 transition-colors flex items-center gap-5">
+                                <div className="bg-brand w-12 h-12 shrink-0 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-brand/20">
+                                    <TrendingUp size={24} />
                                 </div>
-                                <h4 className="text-2xl font-bold mb-3">عائد استثماري مجزي</h4>
-                                <p className="text-stone-400 leading-relaxed">
-                                    نقدم نموذج عمل مثبت النجاح يضمن لك تحقيق عوائد استثمارية عالية وفترة استرداد قياسية لرأس المال.
-                                </p>
+                                <div>
+                                    <h4 className="text-xl font-bold mb-2">عائد استثماري مجزي</h4>
+                                    <p className="text-stone-400 leading-relaxed text-sm">
+                                        نقدم نموذج عمل مثبت النجاح يضمن لك تحقيق عوائد استثمارية عالية وفترة استرداد قياسية لرأس المال.
+                                    </p>
+                                </div>
                             </div>
 
-                            <div className="bg-white/5 backdrop-blur-sm p-8 rounded-3xl border border-white/10 hover:border-brand/50 transition-colors">
-                                <div className="bg-brand w-14 h-14 rounded-2xl flex items-center justify-center mb-6 text-white shadow-lg shadow-brand/20">
-                                    <Building2 size={32} />
+                            <div className="flex-1 bg-white/5 backdrop-blur-sm p-6 rounded-3xl border border-white/10 hover:border-brand/50 transition-colors flex items-center gap-5">
+                                <div className="bg-brand w-12 h-12 shrink-0 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-brand/20">
+                                    <Building2 size={24} />
                                 </div>
-                                <h4 className="text-2xl font-bold mb-3">دعم تشغيلي متكامل</h4>
-                                <p className="text-stone-400 leading-relaxed">
-                                    نوفر لك الدعم الكامل في اختيار الموقع، التصميم، التوظيف، التدريب، والتسويق لضمان انطلاقة قوية.
-                                </p>
+                                <div>
+                                    <h4 className="text-xl font-bold mb-2">دعم تشغيلي متكامل</h4>
+                                    <p className="text-stone-400 leading-relaxed text-sm">
+                                        نوفر لك الدعم الكامل في اختيار الموقع، التصميم، التوظيف، التدريب، والتسويق لضمان انطلاقة قوية.
+                                    </p>
+                                </div>
                             </div>
 
-                            <div className="bg-white/5 backdrop-blur-sm p-8 rounded-3xl border border-white/10 hover:border-brand/50 transition-colors">
-                                <div className="bg-brand w-14 h-14 rounded-2xl flex items-center justify-center mb-6 text-white shadow-lg shadow-brand/20">
-                                    <Users size={32} />
+                            <div className="flex-1 bg-white/5 backdrop-blur-sm p-6 rounded-3xl border border-white/10 hover:border-brand/50 transition-colors flex items-center gap-5">
+                                <div className="bg-brand w-12 h-12 shrink-0 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-brand/20">
+                                    <Users size={24} />
                                 </div>
-                                <h4 className="text-2xl font-bold mb-3">قاعدة عملاء واسعة</h4>
-                                <p className="text-stone-400 leading-relaxed">
-                                    استفد من السمعة الطيبة والشعبية الكبيرة التي تحظى بها علامتنا التجارية في السوق السعودي.
-                                </p>
+                                <div>
+                                    <h4 className="text-xl font-bold mb-2">قاعدة عملاء واسعة</h4>
+                                    <p className="text-stone-400 leading-relaxed text-sm">
+                                        استفد من السمعة الطيبة والشعبية الكبيرة التي تحظى بها علامتنا التجارية في السوق السعودي.
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </motion.div>

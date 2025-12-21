@@ -55,17 +55,18 @@ export default function Footer() {
                     <div>
                         <h4 className="text-xl font-bold text-white mb-6">تواصل معنا</h4>
                         <ul className="space-y-4">
-                            <li className="flex items-start gap-3 justify-end md:justify-start">
-                                <span className="text-right">الرياض، المملكة العربية السعودية</span>
+                            <li className="flex items-start gap-3 justify-start">
                                 <MapPin className="text-brand mt-1 shrink-0" size={20} />
+                                <span className="text-right">الرياض، المملكة العربية السعودية</span>
                             </li>
-                            <li className="flex items-center gap-3 justify-end md:justify-start">
-                                <span dir="ltr">+966 50 000 0000</span>
+                            <li className="flex items-center gap-3 justify-start">
                                 <Phone className="text-brand shrink-0" size={20} />
+                                <span dir="ltr">+966 50 000 0000</span>
+
                             </li>
-                            <li className="flex items-center gap-3 justify-end md:justify-start">
-                                <span>info@dawaralsaada.com</span>
+                            <li className="flex items-center gap-3 justify-start">
                                 <Mail className="text-brand shrink-0" size={20} />
+                                <span>info@dawaralsaada.com</span>
                             </li>
                         </ul>
                     </div>

@@ -3,9 +3,11 @@
 import { motion } from "framer-motion";
 import { useState, useEffect, useMemo } from "react";
 import { getAboutCarouselImages } from "@/app/actions/about-carousel";
+import { getAboutStaticImages } from "@/app/actions/about-static";
 
 export default function About() {
     const [carouselImages, setCarouselImages] = useState([]);
+    const [staticImages, setStaticImages] = useState([]);
 
     useEffect(() => {
         async function loadImages() {
@@ -14,12 +16,22 @@ export default function About() {
                 if (result.success) {
                     setCarouselImages(result.data);
                 }
+
+                const staticResult = await getAboutStaticImages();
+                if (staticResult.success) {
+                    setStaticImages(staticResult.data);
+                }
             } catch (error) {
-                console.error("Failed to load carousel images:", error);
+                console.error("Failed to load images:", error);
             }
         }
         loadImages();
     }, []);
+
+    const getStaticImageSrc = (pos, defaultPath) => {
+        const img = staticImages.find(i => i.position === pos);
+        return img ? img.image : defaultPath;
+    };
 
     // Prepare the infinite carousel items
     const finalSlides = useMemo(() => {
@@ -123,7 +135,7 @@ export default function About() {
                                 transition={{ duration: 0.5 }}
                                 className="absolute top-0 right-0 w-[75%] md:w-3/4 h-[240px] sm:h-[300px] md:h-3/4 rounded-[2rem] overflow-hidden shadow-2xl z-20 border-4 border-white"
                             >
-                                <img src="/about2.png" alt="Food presentation" className="object-cover w-full h-full" />
+                                <img src={getStaticImageSrc(2, "/about2.png")} alt="Food presentation" className="object-cover w-full h-full" />
                             </motion.div>
 
                             <motion.div
@@ -131,11 +143,11 @@ export default function About() {
                                 transition={{ duration: 0.5 }}
                                 className="absolute bottom-0 left-0 w-[75%] md:w-2/3 h-[200px] sm:h-[260px] md:h-2/3 rounded-[2rem] overflow-hidden shadow-2xl z-30 border-4 border-white"
                             >
-                                <img src="/about1.png" alt="Chef preparing food" className="object-cover w-full h-full" />
+                                <img src={getStaticImageSrc(1, "/about1.png")} alt="Chef preparing food" className="object-cover w-full h-full" />
                             </motion.div>
 
                             <div className="absolute top-1/2 left-[15%] sm:left-1/4 -translate-x-1/2 -translate-y-1/2 w-20 h-20 sm:w-24 sm:h-24 bg-brand rounded-full z-40 flex items-center justify-center shadow-xl animate-bounce border-2 border-white">
-                                <span className="text-white font-bold text-sm sm:text-xl text-center leading-tight">+١٥٥<br />فرع </span>
+                                <span className="text-white font-bold text-sm sm:text-xl text-center leading-tight">+١٦٠<br />فرع </span>
                             </div>
 
                             <div className="absolute -bottom-4 -right-4 w-[90%] h-[90%] border-2 border-brand/20 rounded-[2.5rem] z-10 hidden sm:block"></div>
@@ -154,7 +166,7 @@ export default function About() {
                             x: {
                                 repeat: Infinity,
                                 repeatType: "loop",
-                                duration: 40, // Slower speed for better viewing
+                                duration: 80, // Slower speed for better viewing
                                 ease: "linear",
                             },
                         }}

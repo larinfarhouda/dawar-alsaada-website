@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { LayoutDashboard, Menu, MapPin, FileText, LogOut, Building, Image, Store, Tag, GalleryHorizontal } from 'lucide-react';
+import { LayoutDashboard, Menu, MapPin, FileText, LogOut, Building, Image, Store, Tag, GalleryHorizontal, Smartphone } from 'lucide-react';
 import DashboardAuth from './DashboardAuth';
 
 export default function DashboardLayout({ children }) {
@@ -13,8 +13,9 @@ export default function DashboardLayout({ children }) {
         { name: 'نظرة عامة', href: '/dashboard', icon: LayoutDashboard },
         { name: 'خلفية الصفحة الرئيسية', href: '/dashboard/hero', icon: Image },
         { name: 'صور "عن دوار السعادة"', href: '/dashboard/about-carousel', icon: GalleryHorizontal },
+        { name: 'قسم التطبيق', href: '/dashboard/app-promo', icon: Smartphone },
         { name: 'التصنيفات', href: '/dashboard/categories', icon: Tag },
-        { name: 'قائمة الطعام', href: '/dashboard/menu', icon: Menu },
+        // { name: 'قائمة الطعام', href: '/dashboard/menu', icon: Menu },
         { name: 'الفروع', href: '/dashboard/branches', icon: MapPin },
         { name: 'المدن', href: '/dashboard/cities', icon: Building },
         { name: 'طلبات التوظيف', href: '/dashboard/applications', icon: FileText },

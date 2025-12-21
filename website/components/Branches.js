@@ -52,7 +52,7 @@ export default function Branches({ branches = [], cities = [] }) {
                         أقرب مما <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand to-amber-500">تتخيل</span>
                     </h3>
                     <p className="text-stone-500 text-lg max-w-2xl mx-auto">
-                        نقدم لكم السعادة في أكثر من <span className="text-brand font-bold">١٣٣ فرع</span> حول المملكة
+                        نقدم لكم السعادة في أكثر من <span className="text-brand font-bold">١٦٠ فرع</span> حول المملكة
                     </p>
                 </div>
 
@@ -97,42 +97,44 @@ export default function Branches({ branches = [], cities = [] }) {
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: index * 0.1 }}
-                                    className="group relative bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-stone-100 hover:border-brand/20 hover:-translate-y-2"
+                                    className="group bg-white p-5 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-stone-100 hover:border-brand/30"
                                 >
-                                    {/* Decorative Corner */}
-                                    <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-brand/10 to-transparent rounded-bl-3xl rounded-tr-3xl" />
-
-                                    <div className="flex items-start justify-between mb-6 relative z-10">
-                                        <div className="bg-gradient-to-br from-brand to-amber-500 p-4 rounded-2xl text-white shadow-lg shadow-brand/20 group-hover:scale-110 transition-transform">
-                                            <MapPin size={28} />
+                                    <div className="flex items-center justify-between mb-4">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-10 h-10 rounded-xl bg-brand/5 text-brand flex items-center justify-center group-hover:bg-brand group-hover:text-white transition-colors duration-300">
+                                                <MapPin size={20} />
+                                            </div>
+                                            <h4 className="text-lg font-bold text-stone-900">
+                                                {branch.name}
+                                            </h4>
                                         </div>
                                         <a
                                             href={branch.link}
-                                            className="flex items-center gap-2 px-4 py-2 bg-stone-50 hover:bg-brand hover:text-white text-stone-600 rounded-xl transition-all font-medium text-sm group/btn"
+                                            className="flex items-center justify-center w-8 h-8 rounded-full bg-stone-50 text-stone-400 hover:bg-brand hover:text-white transition-all"
+                                            title="اتجاهات"
                                         >
-                                            <span>اتجاهات</span>
-                                            <Navigation size={16} className="group-hover/btn:translate-x-1 transition-transform" />
+                                            <Navigation size={14} />
                                         </a>
                                     </div>
 
-                                    <h4 className="text-2xl font-bold text-stone-900 mb-3 group-hover:text-brand transition-colors">
-                                        {branch.name}
-                                    </h4>
-
-                                    <div className="space-y-3 text-stone-600">
-                                        <div className="flex items-start gap-3">
-                                            <MapPin size={18} className="text-brand mt-1 shrink-0" />
+                                    <div className="space-y-2.5">
+                                        <div className="flex items-start gap-2.5 text-stone-600">
+                                            <MapPin size={16} className="text-brand/60 mt-0.5 shrink-0" />
                                             <p className="text-sm leading-relaxed">{branch.address}</p>
                                         </div>
-                                        <div className="flex items-center gap-3 pt-3 border-t border-stone-100">
-                                            <Phone size={18} className="text-brand shrink-0" />
-                                            <a href={`tel:${branch.phone}`} className="text-sm font-medium hover:text-brand transition-colors">
-                                                {branch.phone}
-                                            </a>
-                                        </div>
-                                        <div className="flex items-center gap-3">
-                                            <Clock size={18} className="text-brand shrink-0" />
-                                            <span className="text-sm">يومياً من ٤:٠٠ فجراً</span>
+
+                                        <div className="flex items-center gap-4 text-sm text-stone-600 pt-2.5 border-t border-stone-50">
+                                            <div className="flex items-center gap-2">
+                                                <Phone size={16} className="text-brand/60" />
+                                                <a href={`tel:${branch.phone}`} className="hover:text-brand transition-colors">
+                                                    {branch.phone}
+                                                </a>
+                                            </div>
+                                            <div className="w-px h-4 bg-stone-200" />
+                                            <div className="flex items-center gap-2">
+                                                <Clock size={16} className="text-brand/60" />
+                                                <span>٤:٠٠ فجراً</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </motion.div>

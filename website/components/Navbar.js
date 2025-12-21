@@ -8,7 +8,7 @@ import Link from "next/link";
 const navLinks = [
     { name: "الرئيسية", href: "#hero" },
     { name: "من نحن", href: "#about" },
-    { name: "قائمة الطعام", href: "#menu" },
+    // { name: "قائمة الطعام", href: "#menu" },
     { name: "الفروع", href: "#branches" },
     // { name: "الامتياز التجاري", href: "#franchise" },
     { name: "وظائف", href: "#careers" },
@@ -34,10 +34,10 @@ export default function Navbar() {
                 : "bg-transparent py-6"
                 }`}
         >
-            <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
+            <div className="container mx-auto px-4 md:px-8 flex justify-between items-center relative">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2 group">
-                    <div className="relative w-16 h-16">
+                    <div className="relative w-22 h-22">
                         <img src="/logo.png" alt="Dawar Al Saada Logo" className="object-contain w-full h-full" />
                     </div>
                     {/* <span className={`text-2xl font-bold ${scrolled ? "text-stone-800" : "text-stone-800 md:text-white"} transition-colors`}>
@@ -45,8 +45,8 @@ export default function Navbar() {
                     </span> */}
                 </Link>
 
-                {/* Desktop Menu */}
-                <div className="hidden md:flex items-center gap-8">
+                {/* Desktop Menu - Centered Links */}
+                <div className="hidden md:flex items-center gap-8 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
                     {navLinks.map((link) => (
                         <Link
                             key={link.name}
@@ -57,6 +57,10 @@ export default function Navbar() {
                             {link.name}
                         </Link>
                     ))}
+                </div>
+
+                {/* Desktop Menu - Action Button */}
+                <div className="hidden md:block">
                     <Link href="#franchise" className="bg-brand hover:bg-brand/90 text-white px-6 py-2 rounded-full font-bold transition-transform hover:scale-105 shadow-lg">
                         الامتياز التجاري
                     </Link>

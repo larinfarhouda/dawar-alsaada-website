@@ -69,24 +69,29 @@ async function getActiveHeroMedia() {
 }
 
 
+import { getAppPromo } from "@/app/actions/app-promo";
+
 export default async function Home() {
-  const [menuItems, branches, cities, heroMedia] = await Promise.all([
+  const [menuItems, branches, cities, heroMedia, appPromoResult] = await Promise.all([
     getMenuItems(),
     getBranches(),
     getCities(),
-    getActiveHeroMedia()
+    getActiveHeroMedia(),
+    getAppPromo()
   ]);
+
+  const appPromo = appPromoResult.success ? appPromoResult.data : null;
 
   return (
     <main className="min-h-screen bg-stone-50">
       <Navbar />
       <Hero media={heroMedia} />
       <About />
-      <MenuHighlights items={menuItems} />
+      {/* <MenuHighlights items={menuItems} /> */}
       <Branches branches={branches} cities={cities} />
       <Franchise />
       <Careers />
-      <AppPromo />
+      <AppPromo data={appPromo} />
       <Footer />
     </main>
   );

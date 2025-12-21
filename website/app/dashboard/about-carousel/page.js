@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { uploadAboutCarouselImage, deleteAboutCarouselImage, getAboutCarouselImages } from '@/app/actions/about-carousel';
+import { uploadAboutStaticImage, getAboutStaticImages } from '@/app/actions/about-static';
 import { X, Trash2 } from 'lucide-react';
 
 export default function AboutCarouselPage() {
     const [images, setImages] = useState([]);
+    const [staticImages, setStaticImages] = useState([]);
     const [loading, setLoading] = useState(true);
     const [uploading, setUploading] = useState(false);
     const [message, setMessage] = useState({ type: '', text: '' });
@@ -13,6 +15,7 @@ export default function AboutCarouselPage() {
 
     useEffect(() => {
         loadImages();
+        loadStaticImages();
     }, []);
 
     async function loadImages() {
@@ -22,6 +25,44 @@ export default function AboutCarouselPage() {
             setImages(result.data);
         }
         setLoading(false);
+    }
+
+    async function loadStaticImages() {
+        const result = await getAboutStaticImages();
+        if (result.success) {
+            setStaticImages(result.data);
+        }
+    }
+
+    async function handleStaticUpload(e, position) {
+        e.preventDefault();
+        setUploading(true);
+        setMessage({ type: '', text: '' });
+
+        const formData = new FormData();
+        const fileInput = e.target.querySelector('input[type="file"]');
+
+        if (!fileInput.files[0]) {
+            setMessage({ type: 'error', text: 'الرجاء اختيار صورة' });
+            setUploading(false);
+            return;
+        }
+
+        formData.append('file', fileInput.files[0]);
+        formData.append('position', position);
+
+        const result = await uploadAboutStaticImage(formData);
+
+        if (result.success) {
+            setMessage({ type: 'success', text: 'تم تحديث الصورة بنجاح' });
+            // Clear input
+            fileInput.value = '';
+            loadStaticImages();
+        } else {
+            setMessage({ type: 'error', text: result.error || 'حدث خطأ أثناء رفع الصورة' });
+        }
+
+        setUploading(false);
     }
 
     async function handleUpload(e) {
@@ -64,6 +105,8 @@ export default function AboutCarouselPage() {
         setViewingImage(null);
     }
 
+    const getStaticImage = (pos) => staticImages.find(img => img.position === pos);
+
     return (
         <div className="p-6">
             <h1 className="text-3xl font-bold text-stone-800 mb-6">إدارة صور "عن دوار السعادة"</h1>
@@ -75,9 +118,70 @@ export default function AboutCarouselPage() {
                 </div>
             )}
 
-            {/* Upload Form */}
+            {/* Static Images Section */}
+            <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+                <h2 className="text-xl font-bold text-stone-800 mb-6 border-b pb-2">الصور الثابتة</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+                    {/* Position 1: Bottom Image */}
+                    <div className="space-y-4">
+                        <h3 className="font-bold text-stone-700">الصورة السفلية (يسار)</h3>
+                        <div className="aspect-[4/3] bg-stone-100 rounded-lg overflow-hidden border-2 border-dashed border-stone-300 flex items-center justify-center relative">
+                            {getStaticImage(1) ? (
+                                <img src={getStaticImage(1).image} alt="Static 1" className="w-full h-full object-cover" />
+                            ) : (
+                                <span className="text-stone-400">لا توجد صورة</span>
+                            )}
+                        </div>
+                        <form onSubmit={(e) => handleStaticUpload(e, 1)} className="flex gap-2">
+                            <input
+                                type="file"
+                                accept="image/*"
+                                className="flex-1 text-sm text-stone-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand/10 file:text-brand hover:file:bg-brand/20"
+                            />
+                            <button
+                                type="submit"
+                                disabled={uploading}
+                                className="bg-brand text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-brand/90 disabled:opacity-50"
+                            >
+                                تحديث
+                            </button>
+                        </form>
+                    </div>
+
+                    {/* Position 2: Top Image */}
+                    <div className="space-y-4">
+                        <h3 className="font-bold text-stone-700">الصورة العلوية (يمين)</h3>
+                        <div className="aspect-[4/3] bg-stone-100 rounded-lg overflow-hidden border-2 border-dashed border-stone-300 flex items-center justify-center relative">
+                            {getStaticImage(2) ? (
+                                <img src={getStaticImage(2).image} alt="Static 2" className="w-full h-full object-cover" />
+                            ) : (
+                                <span className="text-stone-400">لا توجد صورة</span>
+                            )}
+                        </div>
+                        <form onSubmit={(e) => handleStaticUpload(e, 2)} className="flex gap-2">
+                            <input
+                                type="file"
+                                accept="image/*"
+                                className="flex-1 text-sm text-stone-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand/10 file:text-brand hover:file:bg-brand/20"
+                            />
+                            <button
+                                type="submit"
+                                disabled={uploading}
+                                className="bg-brand text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-brand/90 disabled:opacity-50"
+                            >
+                                تحديث
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+            {/* Carousel Upload Form */}
             <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-                <h2 className="text-xl font-bold text-stone-800 mb-4">رفع صورة جديدة</h2>
+                <h2 className="text-xl font-bold text-stone-800 mb-4 border-b pb-2">صور المعرض المتحرك</h2>
+                <h3 className="text-lg font-bold text-stone-700 mb-4">رفع صورة جديدة للمعرض</h3>
                 <form onSubmit={handleUpload} className="space-y-4">
                     <div>
                         <label className="block text-sm font-medium text-stone-700 mb-2">
@@ -100,14 +204,14 @@ export default function AboutCarouselPage() {
                         disabled={uploading}
                         className="w-full bg-brand text-white px-6 py-3 rounded-lg font-bold hover:bg-brand/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        {uploading ? 'جاري الرفع...' : 'رفع الصورة'}
+                        {uploading ? 'جاري الرفع...' : 'رفع الصورة للمعرض'}
                     </button>
                 </form>
             </div>
 
             {/* Images List */}
             <div className="bg-white rounded-lg shadow-md p-6">
-                <h2 className="text-xl font-bold text-stone-800 mb-4">الصور المرفوعة</h2>
+                <h2 className="text-xl font-bold text-stone-800 mb-4">صور المعرض المرفوعة</h2>
 
                 {loading ? (
                     <p className="text-center text-stone-500 py-8">جاري التحميل...</p>

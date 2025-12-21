@@ -5,16 +5,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { Smartphone, Download } from "lucide-react";
 
-export default function AppPromo() {
+export default function AppPromo({ data }) {
+    if (!data) return null;
+
     return (
         <section className="relative py-24 overflow-hidden bg-gradient-to-br from-[#F05A28] to-[#c2410c]">
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-10">
-                <div className="absolute top-0 left-0 w-full h-full bg-[url('/hero-bg.png')] bg-cover bg-center mix-blend-overlay"></div>
+                <div
+                    className="absolute top-0 left-0 w-full h-full bg-cover bg-center mix-blend-overlay"
+                    style={{ backgroundImage: `url('${data.backgroundImage}')` }}
+                ></div>
             </div>
 
             <div className="container mx-auto px-4 sm:px-6 relative z-10">
-                <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
+                <div className="flex flex-col lg:flex-row items-center justify-center gap-12">
 
                     {/* Text Content */}
                     <motion.div
@@ -30,18 +35,18 @@ export default function AppPromo() {
                         </div>
 
                         <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-                            حمل التطبيق الآن <br />
+                            {data.title} <br />
                             <span className="text-yellow-200">
-                                واستمتع بعروض حصرية
+                                {data.subtitle}
                             </span>
                         </h2>
 
                         <p className="text-lg text-white/90 mb-8 leading-relaxed max-w-xl mx-auto">
-                            اطلب طعامك المفضل بكل سهولة، تتبع طلبك لحظة بلحظة، واحصل على نقاط ولاء مع كل طلب. تجربة طعام فريدة بين يديك.
+                            {data.description}
                         </p>
 
                         <div className="flex flex-wrap justify-center gap-4">
-                            <Link href="#" className="flex items-center gap-3 px-6 py-3 bg-white text-stone-900 rounded-xl hover:bg-stone-100 transition-colors shadow-lg shadow-black/20">
+                            <Link href={data.appStoreLink} className="flex items-center gap-3 px-6 py-3 bg-white text-stone-900 rounded-xl hover:bg-stone-100 transition-colors shadow-lg shadow-black/20">
                                 <div className="flex flex-col items-end">
                                     <span className="text-xs text-stone-500">Download on the</span>
                                     <span className="text-lg font-bold leading-none">App Store</span>
@@ -51,7 +56,7 @@ export default function AppPromo() {
                                 </svg>
                             </Link>
 
-                            <Link href="#" className="flex items-center gap-3 px-6 py-3 bg-transparent border border-white/30 text-white rounded-xl hover:bg-white/10 transition-colors backdrop-blur-sm">
+                            <Link href={data.googlePlayLink} className="flex items-center gap-3 px-6 py-3 bg-transparent border border-white/30 text-white rounded-xl hover:bg-white/10 transition-colors backdrop-blur-sm">
                                 <div className="flex flex-col items-end">
                                     <span className="text-xs text-stone-400">GET IT ON</span>
                                     <span className="text-lg font-bold leading-none">Google Play</span>
@@ -76,7 +81,7 @@ export default function AppPromo() {
                             <div className="absolute inset-0 bg-brand/20 blur-3xl rounded-full transform scale-110"></div>
 
                             <Image
-                                src="/app-mockup.png"
+                                src={data.phoneImage}
                                 alt="Dawar Al Saada App Interface"
                                 fill
                                 className="object-contain drop-shadow-2xl z-10"
