@@ -8,14 +8,41 @@ import { createFranchiseRequest } from "@/app/actions/franchise";
 export default function Franchise() {
     const [formStatus, setFormStatus] = useState("idle"); // idle, submitting, success, error
     const [errorMessage, setErrorMessage] = useState("");
+    const [step, setStep] = useState(1);
+
+    const [formData, setFormData] = useState({
+        name: "",
+        phone: "",
+        email: "",
+        profession: "",
+        age: "",
+        city: "",
+        investmentSource: "",
+        companyName: "",
+        companyActivity: "",
+        locationLink: "",
+        experience: "",
+        readiness: "",
+        additionalInfo: "",
+        questions: ""
+    });
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setFormStatus("submitting");
         setErrorMessage("");
 
-        const formData = new FormData(e.target);
-        const result = await createFranchiseRequest(formData);
+        const data = new FormData();
+        Object.entries(formData).forEach(([key, value]) => {
+            data.append(key, value);
+        });
+
+        const result = await createFranchiseRequest(data);
 
         if (result.success) {
             setFormStatus("success");
@@ -28,6 +55,23 @@ export default function Franchise() {
     const resetForm = () => {
         setFormStatus("idle");
         setErrorMessage("");
+        setStep(1);
+        setFormData({
+            name: "",
+            phone: "",
+            email: "",
+            profession: "",
+            age: "",
+            city: "",
+            investmentSource: "",
+            companyName: "",
+            companyActivity: "",
+            locationLink: "",
+            experience: "",
+            readiness: "",
+            additionalInfo: "",
+            questions: ""
+        });
     };
 
     return (
@@ -126,99 +170,239 @@ export default function Franchise() {
                                     </div>
                                 )}
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                    <div className="space-y-2">
-                                        <label className="text-sm font-bold text-stone-700">الاسم الكامل</label>
-                                        <input
-                                            type="text"
-                                            name="name"
-                                            required
-                                            className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
-                                            placeholder="الاسم الثلاثي"
-                                        />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label className="text-sm font-bold text-stone-700">رقم الجوال</label>
-                                        <input
-                                            type="tel"
-                                            name="phone"
-                                            required
-                                            className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
-                                            placeholder="05xxxxxxxx"
-                                        />
-                                    </div>
-                                </div>
+                                {/* Step 1: Personal Information */}
+                                {step === 1 && (
+                                    <motion.div
+                                        initial={{ opacity: 0, x: 20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: -20 }}
+                                        className="space-y-5"
+                                    >
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                            <div className="space-y-2">
+                                                <label className="text-sm font-bold text-stone-700">الاسم الكامل</label>
+                                                <input
+                                                    type="text"
+                                                    name="name"
+                                                    value={formData.name}
+                                                    onChange={handleInputChange}
+                                                    required
+                                                    className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
+                                                    placeholder="الاسم الثلاثي"
+                                                />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <label className="text-sm font-bold text-stone-700">رقم الجوال</label>
+                                                <input
+                                                    type="tel"
+                                                    name="phone"
+                                                    value={formData.phone}
+                                                    onChange={handleInputChange}
+                                                    required
+                                                    className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
+                                                    placeholder="05xxxxxxxx"
+                                                />
+                                            </div>
+                                        </div>
 
-                                <div className="space-y-2">
-                                    <label className="text-sm font-bold text-stone-700">البريد الإلكتروني</label>
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        required
-                                        className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
-                                        placeholder="name@example.com"
-                                    />
-                                </div>
+                                        <div className="space-y-2">
+                                            <label className="text-sm font-bold text-stone-700">البريد الإلكتروني</label>
+                                            <input
+                                                type="email"
+                                                name="email"
+                                                value={formData.email}
+                                                onChange={handleInputChange}
+                                                required
+                                                className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
+                                                placeholder="name@example.com"
+                                            />
+                                        </div>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                    <div className="space-y-2">
-                                        <label className="text-sm font-bold text-stone-700">المدينة المقترحة</label>
-                                        <input
-                                            type="text"
-                                            name="city"
-                                            required
-                                            className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
-                                            placeholder="الرياض، جدة..."
-                                        />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label className="text-sm font-bold text-stone-700">الميزانية الاستثمارية</label>
-                                        <select
-                                            name="budget"
-                                            required
-                                            className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                            <div className="space-y-2">
+                                                <label className="text-sm font-bold text-stone-700">المهنة</label>
+                                                <input
+                                                    type="text"
+                                                    name="profession"
+                                                    value={formData.profession}
+                                                    onChange={handleInputChange}
+                                                    required
+                                                    className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
+                                                />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <label className="text-sm font-bold text-stone-700">العمر</label>
+                                                <input
+                                                    type="number"
+                                                    name="age"
+                                                    value={formData.age}
+                                                    onChange={handleInputChange}
+                                                    required
+                                                    className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-2">
+                                            <label className="text-sm font-bold text-stone-700">المدينة المقترحة</label>
+                                            <input
+                                                type="text"
+                                                name="city"
+                                                value={formData.city}
+                                                onChange={handleInputChange}
+                                                required
+                                                className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
+                                                placeholder="الرياض، جدة..."
+                                            />
+                                        </div>
+
+                                        <button
+                                            type="button"
+                                            onClick={() => setStep(2)}
+                                            className="w-full bg-brand hover:bg-brand/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-brand/20 transition-all flex items-center justify-center gap-2 mt-4"
                                         >
-                                            <option value="">اختر الميزانية...</option>
-                                            <option value="500k-1m">٥٠٠ ألف - ١ مليون ريال</option>
-                                            <option value="1m-2m">١ مليون - ٢ مليون ريال</option>
-                                            <option value="2m+">أكثر من ٢ مليون ريال</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                            التالي
+                                        </button>
+                                    </motion.div>
+                                )}
 
-                                <div className="space-y-2">
-                                    <label className="text-sm font-bold text-stone-700">هل لديك خبرة سابقة في المطاعم؟</label>
-                                    <div className="flex gap-6 mt-2">
-                                        <label className="flex items-center gap-2 cursor-pointer">
-                                            <input
-                                                type="radio"
-                                                name="experience"
-                                                value="yes"
+                                {/* Step 2: Business Information */}
+                                {step === 2 && (
+                                    <motion.div
+                                        initial={{ opacity: 0, x: 20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: -20 }}
+                                        className="space-y-5"
+                                    >
+                                        <div className="space-y-2">
+                                            <label className="text-sm font-bold text-stone-700">مصدر الاستثمار</label>
+                                            <select
+                                                name="investmentSource"
+                                                value={formData.investmentSource}
+                                                onChange={handleInputChange}
                                                 required
-                                                className="w-5 h-5 text-brand focus:ring-brand"
-                                            />
-                                            <span>نعم</span>
-                                        </label>
-                                        <label className="flex items-center gap-2 cursor-pointer">
-                                            <input
-                                                type="radio"
-                                                name="experience"
-                                                value="no"
-                                                required
-                                                className="w-5 h-5 text-brand focus:ring-brand"
-                                            />
-                                            <span>لا</span>
-                                        </label>
-                                    </div>
-                                </div>
+                                                className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
+                                            >
+                                                <option value="">اختر المصدر...</option>
+                                                <option value="مدخرات شخصية">مدخرات شخصية</option>
+                                                <option value="استثمارات تجارية">استثمارات تجارية</option>
+                                                <option value="تمويل بنكي">تمويل بنكي</option>
+                                                <option value="أخرى:">أخرى</option>
+                                            </select>
+                                        </div>
 
-                                <button
-                                    type="submit"
-                                    disabled={formStatus === "submitting"}
-                                    className="w-full bg-brand hover:bg-brand/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-brand/20 transition-all flex items-center justify-center gap-2 mt-4 disabled:opacity-70 disabled:cursor-not-allowed"
-                                >
-                                    {formStatus === "submitting" ? "جاري الإرسال..." : "إرسال طلب الامتياز"}
-                                </button>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                            <div className="space-y-2">
+                                                <label className="text-sm font-bold text-stone-700">اسم الشركة (إن وجدت)</label>
+                                                <input
+                                                    type="text"
+                                                    name="companyName"
+                                                    value={formData.companyName}
+                                                    onChange={handleInputChange}
+                                                    className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
+                                                />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <label className="text-sm font-bold text-stone-700">نشاط الشركة (إن وجد)</label>
+                                                <input
+                                                    type="text"
+                                                    name="companyActivity"
+                                                    value={formData.companyActivity}
+                                                    onChange={handleInputChange}
+                                                    className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-2">
+                                            <label className="text-sm font-bold text-stone-700">هل لديك موقع جاهز؟ (رابط قوقل ماب)</label>
+                                            <input
+                                                type="text"
+                                                name="locationLink"
+                                                value={formData.locationLink}
+                                                onChange={handleInputChange}
+                                                className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
+                                                placeholder="https://maps.google.com/..."
+                                            />
+                                        </div>
+
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                            <div className="space-y-2">
+                                                <label className="text-sm font-bold text-stone-700">الخبرة في المطاعم/المقاهي</label>
+                                                <select
+                                                    name="experience"
+                                                    value={formData.experience}
+                                                    onChange={handleInputChange}
+                                                    required
+                                                    className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
+                                                >
+                                                    <option value="">اختر الخبرة...</option>
+                                                    <option value="مالك مطعم">مالك مطعم</option>
+                                                    <option value="ممنوح فرانشايز">ممنوح فرانشايز</option>
+                                                    <option value="مانح فرانشايز">مانح فرانشايز</option>
+                                                    <option value="عملت كموظف">عملت كموظف</option>
+                                                    <option value="أخرى:">أخرى</option>
+                                                </select>
+                                            </div>
+                                            <div className="space-y-2">
+                                                <label className="text-sm font-bold text-stone-700">متى تكون جاهز؟</label>
+                                                <select
+                                                    name="readiness"
+                                                    value={formData.readiness}
+                                                    onChange={handleInputChange}
+                                                    required
+                                                    className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
+                                                >
+                                                    <option value="">اختر الفترة...</option>
+                                                    <option value="في الحال">في الحال</option>
+                                                    <option value="٣ أشهر الى ٦ أشهر">٣ أشهر الى ٦ أشهر</option>
+                                                    <option value="٦ أشهر الى سنة">٦ أشهر الى سنة</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                            <div className="space-y-2">
+                                                <label className="text-sm font-bold text-stone-700">معلومات إضافية</label>
+                                                <textarea
+                                                    name="additionalInfo"
+                                                    value={formData.additionalInfo}
+                                                    onChange={handleInputChange}
+                                                    rows="2"
+                                                    className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none resize-none"
+                                                ></textarea>
+                                            </div>
+
+                                            <div className="space-y-2">
+                                                <label className="text-sm font-bold text-stone-700">أسئلة أو استفسارات</label>
+                                                <textarea
+                                                    name="questions"
+                                                    value={formData.questions}
+                                                    onChange={handleInputChange}
+                                                    rows="2"
+                                                    className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none resize-none"
+                                                ></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex gap-4">
+                                            <button
+                                                type="button"
+                                                onClick={() => setStep(1)}
+                                                className="w-1/3 bg-stone-200 hover:bg-stone-300 text-stone-800 font-bold py-4 rounded-xl transition-all"
+                                            >
+                                                السابق
+                                            </button>
+                                            <button
+                                                type="submit"
+                                                disabled={formStatus === "submitting"}
+                                                className="w-2/3 bg-brand hover:bg-brand/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-brand/20 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                                            >
+                                                {formStatus === "submitting" ? "جاري الإرسال..." : "إرسال طلب الامتياز"}
+                                            </button>
+                                        </div>
+                                    </motion.div>
+                                )}
                             </form>
                         )}
                     </motion.div>

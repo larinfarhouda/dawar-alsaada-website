@@ -41,9 +41,13 @@ export async function createApplication(formData) {
         let cvUrl = null;
 
         // Handle CV file upload if provided
+        let cvBuffer = null;
+
+        // Handle CV file upload if provided
         if (cvFile && cvFile.size > 0) {
             const bytes = await cvFile.arrayBuffer();
-            const buffer = Buffer.from(bytes);
+            cvBuffer = Buffer.from(bytes);
+            const buffer = cvBuffer;
 
             // Create unique filename
             const timestamp = Date.now();
@@ -73,6 +77,21 @@ export async function createApplication(formData) {
                 status: 'New'
             }
         });
+
+        // Sync to Odoo
+        const { createOdooRecord, createOdooAttachment } = await import('@/lib/odoo');
+        const odooId = await createOdooRecord('hr.applicant', {
+            name: `Application for ${position}`,
+            partner_name: name,
+            partner_phone: phone,
+            email_from: email,
+            description: `Position Applied: ${position}`,
+        });
+
+        if (odooId && cvBuffer) {
+            const base64Content = cvBuffer.toString('base64');
+            await createOdooAttachment('hr.applicant', odooId, cvFile.name, base64Content);
+        }
 
         revalidatePath('/dashboard/applications');
         return { success: true };
