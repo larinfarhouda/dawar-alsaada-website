@@ -15,9 +15,12 @@ export async function getMenuItems() {
     }
 }
 
+
 export async function createMenuItem(formData) {
-    const name = formData.get('name');
-    const description = formData.get('description');
+    const name_ar = formData.get('name_ar');
+    const name_en = formData.get('name_en');
+    const description_ar = formData.get('description_ar');
+    const description_en = formData.get('description_en');
     const price = formData.get('price');
     const image = formData.get('image');
     const rating = parseFloat(formData.get('rating') || '0');
@@ -27,8 +30,10 @@ export async function createMenuItem(formData) {
     try {
         await prisma.menuItem.create({
             data: {
-                name,
-                description,
+                name_ar,
+                name_en,
+                description_ar,
+                description_en,
                 price,
                 image,
                 rating,
@@ -58,8 +63,10 @@ export async function deleteMenuItem(id) {
 }
 
 export async function updateMenuItem(id, formData) {
-    const name = formData.get('name');
-    const description = formData.get('description');
+    const name_ar = formData.get('name_ar');
+    const name_en = formData.get('name_en');
+    const description_ar = formData.get('description_ar');
+    const description_en = formData.get('description_en');
     const price = formData.get('price');
     const image = formData.get('image');
     const rating = parseFloat(formData.get('rating') || '0');
@@ -70,8 +77,10 @@ export async function updateMenuItem(id, formData) {
         await prisma.menuItem.update({
             where: { id },
             data: {
-                name,
-                description,
+                name_ar,
+                name_en,
+                description_ar,
+                description_en,
                 price,
                 image,
                 rating,

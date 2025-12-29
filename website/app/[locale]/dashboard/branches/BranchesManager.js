@@ -54,6 +54,7 @@ export default function BranchesManager({ initialBranches, initialCities }) {
         setIsModalOpen(true);
     }
 
+
     return (
         <div>
             <div className="flex justify-between items-center mb-8">
@@ -90,15 +91,21 @@ export default function BranchesManager({ initialBranches, initialCities }) {
                             </div>
                         </div>
 
-                        <h3 className="text-xl font-bold text-stone-900 mb-1">{branch.name}</h3>
+                        <h3 className="text-xl font-bold text-stone-900 mb-1">{branch.name_ar}</h3>
+                        <p className="text-stone-500 text-sm ltr mb-2">{branch.name_en}</p>
+
                         <span className="inline-block bg-stone-100 text-stone-600 text-xs font-bold px-2 py-1 rounded-lg mb-4">
-                            {branch.city}
+                            {branch.city_ar} / {branch.city_en}
                         </span>
 
                         <div className="space-y-3 text-stone-500 text-sm">
                             <p className="flex items-start gap-2">
                                 <MapPin size={16} className="mt-1 shrink-0" />
-                                <span>{branch.address}</span>
+                                <span>{branch.address_ar}</span>
+                            </p>
+                            <p className="flex items-start gap-2 ltr">
+                                <MapPin size={16} className="mt-1 shrink-0" />
+                                <span>{branch.address_en}</span>
                             </p>
                             <p className="flex items-center gap-2">
                                 <Phone size={16} />
@@ -116,8 +123,8 @@ export default function BranchesManager({ initialBranches, initialCities }) {
             {/* Modal */}
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-                    <div className="bg-white rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-200">
-                        <div className="p-6 border-b border-stone-100 flex justify-between items-center">
+                    <div className="bg-white rounded-3xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl animate-in fade-in zoom-in duration-200">
+                        <div className="p-6 border-b border-stone-100 flex justify-between items-center sticky top-0 bg-white z-10">
                             <h3 className="text-xl font-bold text-stone-900">
                                 {editingBranch ? 'تعديل فرع' : 'إضافة فرع جديد'}
                             </h3>
@@ -129,38 +136,76 @@ export default function BranchesManager({ initialBranches, initialCities }) {
                         <form onSubmit={handleSubmit} className="p-6 space-y-4">
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-stone-700 mb-1">المدينة</label>
+                                    <label className="block text-sm font-medium text-stone-700 mb-1">المدينة (عربي)</label>
                                     <select
-                                        name="city"
-                                        defaultValue={editingBranch?.city || (cities.length > 0 ? cities[0].name : "")}
+                                        name="city_ar"
+                                        defaultValue={editingBranch?.city_ar || (cities.length > 0 ? cities[0].name_ar : "")}
                                         className="w-full px-4 py-2 rounded-xl border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
                                     >
                                         {cities.map((city) => (
-                                            <option key={city.id} value={city.name}>
-                                                {city.name}
+                                            <option key={city.id} value={city.name_ar}>
+                                                {city.name_ar}
                                             </option>
                                         ))}
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-stone-700 mb-1">اسم الفرع</label>
+                                    <label className="block text-sm font-medium text-stone-700 mb-1">City (English)</label>
+                                    <select
+                                        name="city_en"
+                                        defaultValue={editingBranch?.city_en || (cities.length > 0 ? cities[0].name_en : "")}
+                                        className="w-full px-4 py-2 rounded-xl border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
+                                        dir="ltr"
+                                    >
+                                        {cities.map((city) => (
+                                            <option key={city.id} value={city.name_en}>
+                                                {city.name_en}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-stone-700 mb-1">اسم الفرع (عربي)</label>
                                     <input
-                                        name="name"
-                                        defaultValue={editingBranch?.name}
+                                        name="name_ar"
+                                        defaultValue={editingBranch?.name_ar}
                                         required
                                         className="w-full px-4 py-2 rounded-xl border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
                                     />
                                 </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-stone-700 mb-1">Branch Name (English)</label>
+                                    <input
+                                        name="name_en"
+                                        defaultValue={editingBranch?.name_en}
+                                        className="w-full px-4 py-2 rounded-xl border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
+                                        dir="ltr"
+                                    />
+                                </div>
                             </div>
 
-                            <div>
-                                <label className="block text-sm font-medium text-stone-700 mb-1">العنوان</label>
-                                <input
-                                    name="address"
-                                    defaultValue={editingBranch?.address}
-                                    required
-                                    className="w-full px-4 py-2 rounded-xl border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
-                                />
+                            <div className="space-y-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-stone-700 mb-1">العنوان (عربي)</label>
+                                    <input
+                                        name="address_ar"
+                                        defaultValue={editingBranch?.address_ar}
+                                        required
+                                        className="w-full px-4 py-2 rounded-xl border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-stone-700 mb-1">Address (English)</label>
+                                    <input
+                                        name="address_en"
+                                        defaultValue={editingBranch?.address_en}
+                                        className="w-full px-4 py-2 rounded-xl border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
+                                        dir="ltr"
+                                    />
+                                </div>
                             </div>
 
                             <div>

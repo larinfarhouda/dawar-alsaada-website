@@ -60,6 +60,7 @@ export default function MenuManager({ initialItems, categories }) {
         setIsModalOpen(true);
     }
 
+
     return (
         <div>
             <div className="flex justify-between items-center mb-8">
@@ -78,7 +79,7 @@ export default function MenuManager({ initialItems, categories }) {
                     <div key={item.id} className="bg-white rounded-3xl overflow-hidden shadow-sm border border-stone-100 group hover:shadow-md transition-all">
                         <div className="h-48 overflow-hidden relative bg-stone-100">
                             {item.image ? (
-                                <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                                <img src={item.image} alt={item.name_ar} className="w-full h-full object-cover" />
                             ) : (
                                 <div className="w-full h-full flex items-center justify-center text-stone-300">
                                     <ImageIcon size={40} />
@@ -93,7 +94,10 @@ export default function MenuManager({ initialItems, categories }) {
 
                         <div className="p-6">
                             <div className="flex justify-between items-start mb-2">
-                                <h3 className="text-xl font-bold text-stone-900">{item.name}</h3>
+                                <div>
+                                    <h3 className="text-xl font-bold text-stone-900">{item.name_ar}</h3>
+                                    <p className="text-stone-500 text-sm ltr">{item.name_en}</p>
+                                </div>
                                 <div className="flex items-center gap-1 text-amber-400 font-bold text-sm bg-amber-50 px-2 py-1 rounded-lg">
                                     <Star size={14} className="fill-amber-400" />
                                     <span>{item.rating}</span>
@@ -102,11 +106,11 @@ export default function MenuManager({ initialItems, categories }) {
 
                             {item.category && (
                                 <span className="text-xs font-medium text-stone-500 bg-stone-100 px-2 py-1 rounded-md mb-2 inline-block">
-                                    {item.category.name}
+                                    {item.category.name_ar}
                                 </span>
                             )}
 
-                            <p className="text-stone-500 text-sm mb-4 line-clamp-2 h-10">{item.description}</p>
+                            <p className="text-stone-500 text-sm mb-4 line-clamp-2 h-10">{item.description_ar}</p>
 
                             <div className="flex justify-between items-center mt-4 pt-4 border-t border-stone-100">
                                 <span className="font-bold text-lg text-brand">{item.price}</span>
@@ -134,8 +138,8 @@ export default function MenuManager({ initialItems, categories }) {
             {/* Modal */}
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-                    <div className="bg-white rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-200">
-                        <div className="p-6 border-b border-stone-100 flex justify-between items-center">
+                    <div className="bg-white rounded-3xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl animate-in fade-in zoom-in duration-200">
+                        <div className="p-6 border-b border-stone-100 flex justify-between items-center sticky top-0 bg-white z-10">
                             <h3 className="text-xl font-bold text-stone-900">
                                 {editingItem ? 'تعديل عنصر' : 'إضافة عنصر جديد'}
                             </h3>
@@ -145,14 +149,25 @@ export default function MenuManager({ initialItems, categories }) {
                         </div>
 
                         <form onSubmit={handleSubmit} className="p-6 space-y-4">
-                            <div>
-                                <label className="block text-sm font-medium text-stone-700 mb-1">اسم الطبق</label>
-                                <input
-                                    name="name"
-                                    defaultValue={editingItem?.name}
-                                    required
-                                    className="w-full px-4 py-2 rounded-xl border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
-                                />
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-stone-700 mb-1">اسم الطبق (عربي)</label>
+                                    <input
+                                        name="name_ar"
+                                        defaultValue={editingItem?.name_ar}
+                                        required
+                                        className="w-full px-4 py-2 rounded-xl border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-stone-700 mb-1">Dish Name (English)</label>
+                                    <input
+                                        name="name_en"
+                                        defaultValue={editingItem?.name_en}
+                                        className="w-full px-4 py-2 rounded-xl border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
+                                        dir="ltr"
+                                    />
+                                </div>
                             </div>
 
                             <div>
@@ -164,20 +179,32 @@ export default function MenuManager({ initialItems, categories }) {
                                 >
                                     <option value="">اختر تصنيف</option>
                                     {categories?.map(cat => (
-                                        <option key={cat.id} value={cat.id}>{cat.name}</option>
+                                        <option key={cat.id} value={cat.id}>{cat.name_ar} / {cat.name_en}</option>
                                     ))}
                                 </select>
                             </div>
 
-                            <div>
-                                <label className="block text-sm font-medium text-stone-700 mb-1">الوصف</label>
-                                <textarea
-                                    name="description"
-                                    defaultValue={editingItem?.description}
-                                    required
-                                    rows={3}
-                                    className="w-full px-4 py-2 rounded-xl border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none resize-none"
-                                />
+                            <div className="space-y-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-stone-700 mb-1">الوصف (عربي)</label>
+                                    <textarea
+                                        name="description_ar"
+                                        defaultValue={editingItem?.description_ar}
+                                        required
+                                        rows={3}
+                                        className="w-full px-4 py-2 rounded-xl border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none resize-none"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-stone-700 mb-1">Description (English)</label>
+                                    <textarea
+                                        name="description_en"
+                                        defaultValue={editingItem?.description_en}
+                                        rows={3}
+                                        className="w-full px-4 py-2 rounded-xl border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none resize-none"
+                                        dir="ltr"
+                                    />
+                                </div>
                             </div>
 
                             <div className="grid grid-cols-2 gap-4">

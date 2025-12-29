@@ -4,8 +4,12 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Upload, Send, CheckCircle, Briefcase } from "lucide-react";
 import { createApplication } from "@/app/actions/applications";
+import { saudiCities } from "@/lib/saudiCities";
+import { useTranslations, useLocale } from 'next-intl';
 
 export default function Careers() {
+    const t = useTranslations('Careers');
+    const locale = useLocale();
     const [formStatus, setFormStatus] = useState("idle"); // idle, submitting, success, error
     const [errorMessage, setErrorMessage] = useState("");
     const [selectedFile, setSelectedFile] = useState(null);
@@ -15,7 +19,7 @@ export default function Careers() {
         if (file) {
             // Validate file size (5MB)
             if (file.size > 5 * 1024 * 1024) {
-                alert("حجم الملف يجب أن يكون أقل من 5 ميجابايت");
+                alert(t('file_size_error'));
                 e.target.value = "";
                 setSelectedFile(null);
                 return;
@@ -38,7 +42,7 @@ export default function Careers() {
             setSelectedFile(null);
         } else {
             setFormStatus("error");
-            setErrorMessage(result.error || "حدث خطأ أثناء إرسال الطلب");
+            setErrorMessage(result.error || t('something_went_wrong'));
         }
     };
 
@@ -59,13 +63,13 @@ export default function Careers() {
                         className="inline-flex items-center gap-2 mb-4"
                     >
                         <Briefcase className="text-brand" size={24} />
-                        <h2 className="text-brand font-bold text-lg tracking-wide">انضم إلينا</h2>
+                        <h2 className="text-brand font-bold text-lg tracking-wide">{t('badge')}</h2>
                     </motion.div>
                     <h3 className="text-4xl md:text-6xl font-bold text-white mb-4">
-                        اصنع <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand to-amber-400">مستقبلك</span> معنا
+                        {t('title_part1')} <span className="text-brand">{t('title_part2')}</span> {t('title_part3')}
                     </h3>
                     <p className="text-stone-400 mt-4 max-w-2xl mx-auto text-lg">
-                        نبحث دائماً عن المواهب الشغوفة لتنضم إلى عائلة دوار السعادة. إذا كنت تمتلك الشغف والطموح، مكانك معنا.
+                        {t('description')}
                     </p>
                 </div>
 
@@ -81,31 +85,31 @@ export default function Careers() {
                         >
                             <div className="bg-stone-100 rounded-3xl p-8 md:p-12 relative overflow-hidden h-full">
                                 <div className="relative z-10">
-                                    <h4 className="text-2xl font-bold text-stone-800 mb-6">لماذا العمل معنا؟</h4>
+                                    <h4 className="text-2xl font-bold text-stone-800 mb-6">{t('why_us_title')}</h4>
                                     <ul className="space-y-4">
                                         <li className="flex items-center gap-3">
                                             <div className="bg-brand/10 p-2 rounded-full text-brand">
                                                 <CheckCircle size={20} />
                                             </div>
-                                            <span className="text-stone-700">بيئة عمل محفزة وداعمة</span>
+                                            <span className="text-stone-700">{t('feature_1')}</span>
                                         </li>
                                         <li className="flex items-center gap-3">
                                             <div className="bg-brand/10 p-2 rounded-full text-brand">
                                                 <CheckCircle size={20} />
                                             </div>
-                                            <span className="text-stone-700">فرص للتطور والنمو الوظيفي</span>
+                                            <span className="text-stone-700">{t('feature_2')}</span>
                                         </li>
                                         <li className="flex items-center gap-3">
                                             <div className="bg-brand/10 p-2 rounded-full text-brand">
                                                 <CheckCircle size={20} />
                                             </div>
-                                            <span className="text-stone-700">رواتب ومكافآت مجزية</span>
+                                            <span className="text-stone-700">{t('feature_3')}</span>
                                         </li>
                                         <li className="flex items-center gap-3">
                                             <div className="bg-brand/10 p-2 rounded-full text-brand">
                                                 <CheckCircle size={20} />
                                             </div>
-                                            <span className="text-stone-700">تدريب مستمر وتطوير مهارات</span>
+                                            <span className="text-stone-700">{t('feature_4')}</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -128,13 +132,13 @@ export default function Careers() {
                                     <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
                                         <CheckCircle size={40} />
                                     </div>
-                                    <h4 className="text-2xl font-bold text-stone-800 mb-2">تم استلام طلبك بنجاح!</h4>
-                                    <p className="text-stone-600">شكراً لاهتمامك بالانضمام إلينا. سنقوم بمراجعة طلبك والتواصل معك قريباً.</p>
+                                    <h4 className="text-2xl font-bold text-stone-800 mb-2">{t('success_title')}</h4>
+                                    <p className="text-stone-600">{t('success_msg')}</p>
                                     <button
                                         onClick={resetForm}
                                         className="mt-8 text-brand font-bold hover:underline"
                                     >
-                                        إرسال طلب آخر
+                                        {t('another_request_btn')}
                                     </button>
                                 </div>
                             ) : (
@@ -147,18 +151,18 @@ export default function Careers() {
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
-                                            <label htmlFor="name" className="text-stone-700 font-medium">الاسم الكامل</label>
+                                            <label htmlFor="name" className="text-stone-700 font-medium">{t('form_name')}</label>
                                             <input
                                                 type="text"
                                                 id="name"
                                                 name="name"
                                                 required
                                                 className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition-all"
-                                                placeholder="محمد أحمد"
+                                                placeholder={t('form_name_placeholder')}
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <label htmlFor="phone" className="text-stone-700 font-medium">رقم الجوال</label>
+                                            <label htmlFor="phone" className="text-stone-700 font-medium">{t('form_phone')}</label>
                                             <input
                                                 type="tel"
                                                 id="phone"
@@ -170,41 +174,59 @@ export default function Careers() {
                                         </div>
                                     </div>
 
-                                    <div className="space-y-2">
-                                        <label htmlFor="email" className="text-stone-700 font-medium">البريد الإلكتروني</label>
-                                        <input
-                                            type="email"
-                                            id="email"
-                                            name="email"
-                                            required
-                                            className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition-all"
-                                            placeholder="name@example.com"
-                                        />
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div className="space-y-2">
+                                            <label htmlFor="city" className="text-stone-700 font-medium">{t('form_city')}</label>
+                                            <select
+                                                id="city"
+                                                name="city"
+                                                required
+                                                className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition-all appearance-none"
+                                            >
+                                                <option value="">{t('city_placeholder')}</option>
+                                                {saudiCities.map((city) => (
+                                                    <option key={city.en} value={city.ar}>
+                                                        {locale === 'en' ? city.en : city.ar}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label htmlFor="email" className="text-stone-700 font-medium">{t('form_email')}</label>
+                                            <input
+                                                type="email"
+                                                id="email"
+                                                name="email"
+                                                required
+                                                className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition-all"
+                                                placeholder="name@example.com"
+                                            />
+                                        </div>
                                     </div>
 
                                     <div className="space-y-2">
-                                        <label htmlFor="position" className="text-stone-700 font-medium">الوظيفة المطلوبة</label>
+                                        <label htmlFor="position" className="text-stone-700 font-medium">{t('form_position')}</label>
                                         <select
                                             id="position"
                                             name="position"
                                             required
                                             className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition-all appearance-none"
                                         >
-                                            <option value="">اختر الوظيفة...</option>
-                                            <option value="chef">طاهي / مساعد طاهي</option>
-                                            <option value="waiter">مقدم طعام</option>
-                                            <option value="manager">مدير فرع</option>
-                                            <option value="cashier">كاشير</option>
-                                            <option value="other">أخرى</option>
+                                            <option value="">{t('pos_placeholder')}</option>
+                                            <option value="chef">{t('pos_chef')}</option>
+                                            <option value="waiter">{t('pos_waiter')}</option>
+                                            <option value="manager">{t('pos_manager')}</option>
+                                            <option value="cashier">{t('pos_cashier')}</option>
+                                            <option value="other">{t('pos_other')}</option>
                                         </select>
                                     </div>
 
                                     <div className="space-y-2">
-                                        <label className="text-stone-700 font-medium">السيرة الذاتية (اختياري)</label>
+                                        <label className="text-stone-700 font-medium">{t('cv_label')}</label>
                                         <label className="border-2 border-dashed border-stone-300 rounded-xl p-8 text-center hover:border-brand hover:bg-brand/5 transition-colors cursor-pointer group block">
                                             <Upload className="mx-auto text-stone-400 group-hover:text-brand mb-2 transition-colors" />
                                             <p className="text-sm text-stone-500 group-hover:text-brand transition-colors">
-                                                {selectedFile ? selectedFile.name : "اضغط لرفع الملف أو اسحب الملف هنا"}
+                                                {selectedFile ? selectedFile.name : t('cv_placeholder')}
                                             </p>
                                             <p className="text-xs text-stone-400 mt-1">PDF, DOCX (Max 5MB)</p>
                                             <input
@@ -223,10 +245,10 @@ export default function Careers() {
                                         className="w-full bg-brand hover:bg-brand/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-brand/20 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                                     >
                                         {formStatus === "submitting" ? (
-                                            "جاري الإرسال..."
+                                            t('submitting_btn')
                                         ) : (
                                             <>
-                                                <span>إرسال الطلب</span>
+                                                <span>{t('submit_btn')}</span>
                                                 <Send size={18} />
                                             </>
                                         )}

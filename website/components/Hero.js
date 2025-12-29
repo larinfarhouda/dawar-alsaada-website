@@ -4,8 +4,10 @@ import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion
 import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslations } from 'next-intl';
 
 export default function Hero({ media }) {
+  const t = useTranslations('Hero');
   const ref = useRef(null);
   const shouldReduceMotion = useReducedMotion();
 
@@ -49,7 +51,8 @@ export default function Hero({ media }) {
             unoptimized
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-stone-50/90"></div>
+
+        <div className="absolute inset-0 bg-black/40"></div>
       </motion.div>
 
       {/* Floating Elements */}
@@ -72,19 +75,27 @@ export default function Hero({ media }) {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
         >
+
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="inline-block mb-3 sm:mb-4 px-4 sm:px-6 py-1.5 sm:py-2 rounded-full border border-white/20 bg-white/5 backdrop-blur-md text-stone-200 text-xs sm:text-sm tracking-wider"
+            className="mb-6 relative w-32 h-32 mx-auto"
           >
-            أصالة الطعم السعودي
+
+            <Image
+              src="/hero-logo.png"
+              alt="Dawar Al Saada Logo"
+              fill
+              className="object-contain"
+            />
           </motion.div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-white mb-6 sm:mb-8 leading-tight tracking-tight px-2">
-            من زان فطوره <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand to-amber-400">
-              زانت اموره
+            {/* {t('title_part1')} <br /> */}
+
+            <span className="text-white">
+              {t('title_part2')}
             </span>
           </h1>
 
@@ -94,7 +105,7 @@ export default function Hero({ media }) {
             transition={{ delay: 0.4, duration: 0.8 }}
             className="text-base sm:text-xl md:text-2xl lg:text-3xl text-stone-200 mb-8 sm:mb-12 font-light max-w-3xl mx-auto leading-relaxed px-4"
           >
-            مرحباً بكم في دوار السعادة، حيث نلتقي لتجربة فريدة من نوعها في عالم الطعام السعودي
+            {t('description')}
           </motion.p>
 
           <motion.div
@@ -104,11 +115,11 @@ export default function Hero({ media }) {
             className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center px-4"
           >
             <Link href="#franchise" className="group relative w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-brand text-white text-base sm:text-lg font-bold rounded-full overflow-hidden shadow-lg shadow-brand/30 transition-all hover:scale-105 hover:shadow-brand/50 flex items-center justify-center">
-              <span className="relative z-10">الامتياز التجاري</span>
+              <span className="relative z-10">{t('franchise_btn')}</span>
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
             </Link>
             <Link href="#branches" className="group w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-transparent border border-white/30 text-white text-base sm:text-lg font-bold rounded-full backdrop-blur-sm transition-all hover:bg-white/10 hover:border-white/60 flex items-center justify-center">
-              اكتشف فروعنا
+              {t('branches_btn')}
             </Link>
           </motion.div>
         </motion.div>
@@ -121,7 +132,7 @@ export default function Hero({ media }) {
         transition={{ delay: 1.5, duration: 2, repeat: Infinity }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/50 flex flex-col items-center gap-2"
       >
-        <span className="text-xs tracking-widest uppercase">اكتشف المزيد</span>
+        <span className="text-xs tracking-widest uppercase">{t('discover_more')}</span>
         <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center p-1">
           <div className="w-1 h-2 bg-brand rounded-full"></div>
         </div>

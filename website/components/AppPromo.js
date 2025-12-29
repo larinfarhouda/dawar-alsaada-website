@@ -9,7 +9,7 @@ export default function AppPromo({ data }) {
     if (!data) return null;
 
     return (
-        <section className="relative py-24 overflow-hidden bg-gradient-to-br from-[#F05A28] to-[#c2410c]">
+        <section className="relative py-24 overflow-hidden bg-[#F05A28]">
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-10">
                 <div
@@ -56,9 +56,9 @@ export default function AppPromo({ data }) {
                                 </svg>
                             </Link>
 
-                            <Link href={data.googlePlayLink} className="flex items-center gap-3 px-6 py-3 bg-transparent border border-white/30 text-white rounded-xl hover:bg-white/10 transition-colors backdrop-blur-sm">
+                            <Link href={data.googlePlayLink} className="flex items-center gap-3 px-6 py-3 bg-white text-stone-900 rounded-xl hover:bg-stone-100 transition-colors shadow-lg shadow-black/20">
                                 <div className="flex flex-col items-end">
-                                    <span className="text-xs text-stone-400">GET IT ON</span>
+                                    <span className="text-xs text-stone-500">GET IT ON</span>
                                     <span className="text-lg font-bold leading-none">Google Play</span>
                                 </div>
                                 <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">

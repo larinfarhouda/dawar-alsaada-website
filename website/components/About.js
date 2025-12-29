@@ -5,7 +5,10 @@ import { useState, useEffect, useMemo } from "react";
 import { getAboutCarouselImages } from "@/app/actions/about-carousel";
 import { getAboutStaticImages } from "@/app/actions/about-static";
 
+import { useTranslations, useLocale } from 'next-intl';
+
 export default function About() {
+    const t = useTranslations('About');
     const [carouselImages, setCarouselImages] = useState([]);
     const [staticImages, setStaticImages] = useState([]);
 
@@ -60,6 +63,10 @@ export default function About() {
         return [...baseList, ...baseList];
     }, [carouselImages]);
 
+
+    const locale = useLocale();
+    const isRtl = locale === 'ar';
+
     return (
         <section id="about" className="py-16 md:py-24 bg-stone-50 relative overflow-hidden">
             {/* Decorative Background */}
@@ -77,42 +84,44 @@ export default function About() {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
-                        className="w-full lg:w-1/2 text-right order-1 lg:order-1"
+                        className={`w-full lg:w-1/2 ${isRtl ? 'text-right' : 'text-left'} order-1 lg:order-1`}
                     >
-                        <div className="inline-flex items-center justify-start gap-2 mb-3 sm:mb-4 w-full">
-                            <h2 className="text-brand font-bold text-base sm:text-lg tracking-wide">قصتنا اللذيذة</h2>
+
+                        <div className={`inline-flex items-center gap-2 mb-3 sm:mb-4 w-full justify-start`}>
+                            <h2 className="text-brand font-bold text-base sm:text-lg tracking-wide">{t('story_badge')}</h2>
                             <span className="w-8 sm:w-12 h-1 bg-brand rounded-full"></span>
                         </div>
 
                         <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-stone-900 mb-6 sm:mb-8 leading-tight">
-                            أكثر من مجرد مطعم، <br />
+                            {t('title_line1')} <br />
                             <span className="relative inline-block mt-1">
-                                <span className="relative z-10">تجربة سعودية أصيلة</span>
+                                <span className="relative z-10">{t('title_line2')}</span>
                                 <span className="absolute bottom-1 sm:bottom-2 left-0 w-full h-2 sm:h-3 bg-brand/20 -rotate-1"></span>
                             </span>
                         </h3>
 
                         <p className="text-base sm:text-lg leading-relaxed mb-4 sm:mb-6 font-light text-stone-600">
-                            في دوار السعادة، نؤمن إن الطعم يبدأ من الفكرة. منذ انطلاقتنا عام 2021، اخترنا نكون أكثر من مجرد مطعم—اخترنا نكون تجربة سعودية تمشي مع روح اليوم، وتتماشى مع رؤية 2030.
+                            {t('description_p1')}
                         </p>
                         <p className="text-base sm:text-lg leading-relaxed mb-8 sm:mb-10 font-light text-stone-600">
-                            بنينا استراتيجيتنا على الجرأة والمرونة، واستقطبنا أفضل الكفاءات لنخلق تجربة فريدة بطابع سعودي أصيل ولمسة حديثة.
+                            {t('description_p2')}
                         </p>
 
                         {/* Stats Grid */}
                         <div className="grid grid-cols-3 gap-2 sm:gap-8 border-t border-stone-200 pt-6 sm:pt-8">
                             {[
-                                { number: "2021", label: "سنة التأسيس" },
-                                { number: "+20", label: "صنف مميز" },
-                                { number: "24/7", label: "خدمة متميزة" }
+                                { number: "2021", label: t('founded_year') },
+                                { number: "+20", label: t('unique_items') },
+                                { number: "24/7", label: t('service_24_7') }
                             ].map((stat, index) => (
                                 <motion.div
                                     key={index}
                                     initial={{ opacity: 0, y: 20 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
+
                                     transition={{ delay: 0.2 + index * 0.1, duration: 0.5 }}
-                                    className="text-center lg:text-right"
+                                    className={`text-center ${isRtl ? 'lg:text-right' : 'lg:text-left'}`}
                                 >
                                     <span className="block text-2xl sm:text-4xl font-bold text-brand mb-1 sm:mb-2">{stat.number}</span>
                                     <span className="text-stone-500 font-medium text-xs sm:text-base">{stat.label}</span>
@@ -146,8 +155,9 @@ export default function About() {
                                 <img src={getStaticImageSrc(1, "/about1.png")} alt="Chef preparing food" className="object-cover w-full h-full" />
                             </motion.div>
 
+
                             <div className="absolute top-1/2 left-[15%] sm:left-1/4 -translate-x-1/2 -translate-y-1/2 w-20 h-20 sm:w-24 sm:h-24 bg-brand rounded-full z-40 flex items-center justify-center shadow-xl animate-bounce border-2 border-white">
-                                <span className="text-white font-bold text-sm sm:text-xl text-center leading-tight">+١٦٠<br />فرع </span>
+                                <span className="text-white font-bold text-sm sm:text-xl text-center leading-tight">+160<br />{t('floating_badge')} </span>
                             </div>
 
                             <div className="absolute -bottom-4 -right-4 w-[90%] h-[90%] border-2 border-brand/20 rounded-[2.5rem] z-10 hidden sm:block"></div>

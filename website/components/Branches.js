@@ -3,8 +3,10 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Navigation, Phone, Clock } from "lucide-react";
+import { useTranslations } from 'next-intl';
 
 export default function Branches({ branches = [], cities = [] }) {
+    const t = useTranslations('Branches');
     // Group branches by city
     const grouped = branches.reduce((acc, branch) => {
         if (!acc[branch.city]) acc[branch.city] = [];
@@ -28,7 +30,7 @@ export default function Branches({ branches = [], cities = [] }) {
     }, []);
 
     return (
-        <section id="branches" className="py-24 bg-gradient-to-b from-white to-stone-50 relative overflow-hidden">
+        <section id="branches" className="py-24 bg-stone-50 relative overflow-hidden">
             {/* Decorative Map Background */}
             <div className="absolute inset-0 opacity-[0.02] bg-[url('https://www.transparenttextures.com/patterns/cartographer.png')] pointer-events-none" />
 
@@ -45,14 +47,14 @@ export default function Branches({ branches = [], cities = [] }) {
                         className="inline-flex items-center gap-2 mb-4"
                     >
                         <span className="w-12 h-1 bg-brand rounded-full" />
-                        <h2 className="text-brand font-bold text-lg tracking-wide">فروعنا</h2>
+                        <h2 className="text-brand font-bold text-lg tracking-wide">{t('badge')}</h2>
                         <span className="w-12 h-1 bg-brand rounded-full" />
                     </motion.div>
                     <h3 className="text-4xl md:text-6xl font-bold text-stone-900 mb-4">
-                        أقرب مما <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand to-amber-500">تتخيل</span>
+                        {t('title_part1')} <span className="text-brand">{t('title_part2')}</span>
                     </h3>
                     <p className="text-stone-500 text-lg max-w-2xl mx-auto">
-                        نقدم لكم السعادة في أكثر من <span className="text-brand font-bold">١٦٠ فرع</span> حول المملكة
+                        {t('description_part1')} <span className="text-brand font-bold">{t('description_part2')}</span> {t('description_part3')}
                     </p>
                 </div>
 
@@ -71,7 +73,7 @@ export default function Branches({ branches = [], cities = [] }) {
                             {activeCity === city && (
                                 <motion.div
                                     layoutId="activeTab"
-                                    className="absolute inset-0 bg-gradient-to-r from-brand to-amber-500"
+                                    className="absolute inset-0 bg-brand"
                                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                                 />
                             )}
@@ -111,7 +113,7 @@ export default function Branches({ branches = [], cities = [] }) {
                                         <a
                                             href={branch.link}
                                             className="flex items-center justify-center w-8 h-8 rounded-full bg-stone-50 text-stone-400 hover:bg-brand hover:text-white transition-all"
-                                            title="اتجاهات"
+                                            title={t('directions_tooltip')}
                                         >
                                             <Navigation size={14} />
                                         </a>
@@ -131,9 +133,10 @@ export default function Branches({ branches = [], cities = [] }) {
                                                 </a>
                                             </div>
                                             <div className="w-px h-4 bg-stone-200" />
+
                                             <div className="flex items-center gap-2">
                                                 <Clock size={16} className="text-brand/60" />
-                                                <span>٤:٠٠ فجراً</span>
+                                                <span>4:00 فجراً</span>
                                             </div>
                                         </div>
                                     </div>

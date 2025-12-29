@@ -4,8 +4,12 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Send, CheckCircle, Building2, TrendingUp, Users } from "lucide-react";
 import { createFranchiseRequest } from "@/app/actions/franchise";
+import { useTranslations, useLocale } from 'next-intl';
+import { saudiCities } from "@/lib/saudiCities";
 
 export default function Franchise() {
+    const t = useTranslations('Franchise');
+    const locale = useLocale();
     const [formStatus, setFormStatus] = useState("idle"); // idle, submitting, success, error
     const [errorMessage, setErrorMessage] = useState("");
     const [step, setStep] = useState(1);
@@ -48,7 +52,7 @@ export default function Franchise() {
             setFormStatus("success");
         } else {
             setFormStatus("error");
-            setErrorMessage(result.error || "حدث خطأ أثناء إرسال الطلب");
+            setErrorMessage(result.error || t('error_msg'));
         }
     };
 
@@ -81,10 +85,10 @@ export default function Franchise() {
 
             <div className="container mx-auto px-4 md:px-8 relative z-10">
                 <div className="text-center mb-16">
-                    <h2 className="text-brand font-bold text-lg mb-6">الامتياز التجاري</h2>
-                    <h3 className="text-4xl md:text-5xl font-bold text-white">كن شريكاً في النجاح</h3>
+                    <h2 className="text-brand font-bold text-lg mb-6">{t('badge')}</h2>
+                    <h3 className="text-4xl md:text-5xl font-bold text-white">{t('title')}</h3>
                     <p className="text-stone-400 mt-4 max-w-2xl mx-auto">
-                        استثمر في علامة تجارية سعودية رائدة وحقق عوائد مجزية. انضم إلى قصة نجاح دوار السعادة.
+                        {t('subtitle')}
                     </p>
                 </div>
 
@@ -103,9 +107,9 @@ export default function Franchise() {
                                     <TrendingUp size={24} />
                                 </div>
                                 <div>
-                                    <h4 className="text-xl font-bold mb-2">عائد استثماري مجزي</h4>
+                                    <h4 className="text-xl font-bold mb-2">{t('roi_title')}</h4>
                                     <p className="text-stone-400 leading-relaxed text-sm">
-                                        نقدم نموذج عمل مثبت النجاح يضمن لك تحقيق عوائد استثمارية عالية وفترة استرداد قياسية لرأس المال.
+                                        {t('roi_desc')}
                                     </p>
                                 </div>
                             </div>
@@ -115,9 +119,9 @@ export default function Franchise() {
                                     <Building2 size={24} />
                                 </div>
                                 <div>
-                                    <h4 className="text-xl font-bold mb-2">دعم تشغيلي متكامل</h4>
+                                    <h4 className="text-xl font-bold mb-2">{t('support_title')}</h4>
                                     <p className="text-stone-400 leading-relaxed text-sm">
-                                        نوفر لك الدعم الكامل في اختيار الموقع، التصميم، التوظيف، التدريب، والتسويق لضمان انطلاقة قوية.
+                                        {t('support_desc')}
                                     </p>
                                 </div>
                             </div>
@@ -127,9 +131,9 @@ export default function Franchise() {
                                     <Users size={24} />
                                 </div>
                                 <div>
-                                    <h4 className="text-xl font-bold mb-2">قاعدة عملاء واسعة</h4>
+                                    <h4 className="text-xl font-bold mb-2">{t('customers_title')}</h4>
                                     <p className="text-stone-400 leading-relaxed text-sm">
-                                        استفد من السمعة الطيبة والشعبية الكبيرة التي تحظى بها علامتنا التجارية في السوق السعودي.
+                                        {t('customers_desc')}
                                     </p>
                                 </div>
                             </div>
@@ -149,20 +153,20 @@ export default function Franchise() {
                                 <div className="w-24 h-24 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
                                     <CheckCircle size={48} />
                                 </div>
-                                <h4 className="text-3xl font-bold text-stone-800 mb-4">تم استلام طلبك!</h4>
+                                <h4 className="text-3xl font-bold text-stone-800 mb-4">{t('success_title')}</h4>
                                 <p className="text-stone-600 text-lg mb-8">
-                                    شكراً لاهتمامك بالاستثمار معنا. سيقوم فريق الامتياز التجاري بدراسة طلبك والتواصل معك قريباً.
+                                    {t('success_msg')}
                                 </p>
                                 <button
                                     onClick={resetForm}
                                     className="text-brand font-bold hover:underline text-lg"
                                 >
-                                    العودة للنموذج
+                                    {t('return_btn')}
                                 </button>
                             </div>
                         ) : (
                             <form onSubmit={handleSubmit} className="space-y-5">
-                                <h4 className="text-2xl font-bold mb-6 text-center">طلب الامتياز التجاري</h4>
+                                <h4 className="text-2xl font-bold mb-6 text-center">{t('form_title')}</h4>
 
                                 {formStatus === "error" && (
                                     <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-red-800">
@@ -180,7 +184,7 @@ export default function Franchise() {
                                     >
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                             <div className="space-y-2">
-                                                <label className="text-sm font-bold text-stone-700">الاسم الكامل</label>
+                                                <label className="text-sm font-bold text-stone-700">{t('full_name')}</label>
                                                 <input
                                                     type="text"
                                                     name="name"
@@ -188,11 +192,11 @@ export default function Franchise() {
                                                     onChange={handleInputChange}
                                                     required
                                                     className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
-                                                    placeholder="الاسم الثلاثي"
+                                                    placeholder={t('full_name_placeholder')}
                                                 />
                                             </div>
                                             <div className="space-y-2">
-                                                <label className="text-sm font-bold text-stone-700">رقم الجوال</label>
+                                                <label className="text-sm font-bold text-stone-700">{t('phone')}</label>
                                                 <input
                                                     type="tel"
                                                     name="phone"
@@ -206,7 +210,7 @@ export default function Franchise() {
                                         </div>
 
                                         <div className="space-y-2">
-                                            <label className="text-sm font-bold text-stone-700">البريد الإلكتروني</label>
+                                            <label className="text-sm font-bold text-stone-700">{t('email')}</label>
                                             <input
                                                 type="email"
                                                 name="email"
@@ -220,7 +224,7 @@ export default function Franchise() {
 
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                             <div className="space-y-2">
-                                                <label className="text-sm font-bold text-stone-700">المهنة</label>
+                                                <label className="text-sm font-bold text-stone-700">{t('profession')}</label>
                                                 <input
                                                     type="text"
                                                     name="profession"
@@ -231,7 +235,7 @@ export default function Franchise() {
                                                 />
                                             </div>
                                             <div className="space-y-2">
-                                                <label className="text-sm font-bold text-stone-700">العمر</label>
+                                                <label className="text-sm font-bold text-stone-700">{t('age')}</label>
                                                 <input
                                                     type="number"
                                                     name="age"
@@ -244,16 +248,21 @@ export default function Franchise() {
                                         </div>
 
                                         <div className="space-y-2">
-                                            <label className="text-sm font-bold text-stone-700">المدينة المقترحة</label>
-                                            <input
-                                                type="text"
+                                            <label className="text-sm font-bold text-stone-700">{t('city')}</label>
+                                            <select
                                                 name="city"
                                                 value={formData.city}
                                                 onChange={handleInputChange}
                                                 required
                                                 className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
-                                                placeholder="الرياض، جدة..."
-                                            />
+                                            >
+                                                <option value="">{t('city_placeholder')}</option>
+                                                {saudiCities.map((city) => (
+                                                    <option key={city.en} value={locale === 'ar' ? city.ar : city.en}>
+                                                        {locale === 'ar' ? city.ar : city.en}
+                                                    </option>
+                                                ))}
+                                            </select>
                                         </div>
 
                                         <button
@@ -261,7 +270,7 @@ export default function Franchise() {
                                             onClick={() => setStep(2)}
                                             className="w-full bg-brand hover:bg-brand/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-brand/20 transition-all flex items-center justify-center gap-2 mt-4"
                                         >
-                                            التالي
+                                            {t('next_btn')}
                                         </button>
                                     </motion.div>
                                 )}
@@ -275,7 +284,7 @@ export default function Franchise() {
                                         className="space-y-5"
                                     >
                                         <div className="space-y-2">
-                                            <label className="text-sm font-bold text-stone-700">مصدر الاستثمار</label>
+                                            <label className="text-sm font-bold text-stone-700">{t('investment_source')}</label>
                                             <select
                                                 name="investmentSource"
                                                 value={formData.investmentSource}
@@ -283,17 +292,17 @@ export default function Franchise() {
                                                 required
                                                 className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
                                             >
-                                                <option value="">اختر المصدر...</option>
-                                                <option value="مدخرات شخصية">مدخرات شخصية</option>
-                                                <option value="استثمارات تجارية">استثمارات تجارية</option>
-                                                <option value="تمويل بنكي">تمويل بنكي</option>
-                                                <option value="أخرى:">أخرى</option>
+                                                <option value="">{t('investment_placeholder')}</option>
+                                                <option value="مدخرات شخصية">{t('inv_personal')}</option>
+                                                <option value="استثمارات تجارية">{t('inv_business')}</option>
+                                                <option value="تمويل بنكي">{t('inv_bank')}</option>
+                                                <option value="أخرى:">{t('inv_other')}</option>
                                             </select>
                                         </div>
 
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                             <div className="space-y-2">
-                                                <label className="text-sm font-bold text-stone-700">اسم الشركة (إن وجدت)</label>
+                                                <label className="text-sm font-bold text-stone-700">{t('company_name')}</label>
                                                 <input
                                                     type="text"
                                                     name="companyName"
@@ -303,7 +312,7 @@ export default function Franchise() {
                                                 />
                                             </div>
                                             <div className="space-y-2">
-                                                <label className="text-sm font-bold text-stone-700">نشاط الشركة (إن وجد)</label>
+                                                <label className="text-sm font-bold text-stone-700">{t('company_activity')}</label>
                                                 <input
                                                     type="text"
                                                     name="companyActivity"
@@ -315,7 +324,7 @@ export default function Franchise() {
                                         </div>
 
                                         <div className="space-y-2">
-                                            <label className="text-sm font-bold text-stone-700">هل لديك موقع جاهز؟ (رابط قوقل ماب)</label>
+                                            <label className="text-sm font-bold text-stone-700">{t('location_link')}</label>
                                             <input
                                                 type="text"
                                                 name="locationLink"
@@ -328,7 +337,7 @@ export default function Franchise() {
 
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                             <div className="space-y-2">
-                                                <label className="text-sm font-bold text-stone-700">الخبرة في المطاعم/المقاهي</label>
+                                                <label className="text-sm font-bold text-stone-700">{t('experience')}</label>
                                                 <select
                                                     name="experience"
                                                     value={formData.experience}
@@ -336,16 +345,16 @@ export default function Franchise() {
                                                     required
                                                     className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
                                                 >
-                                                    <option value="">اختر الخبرة...</option>
-                                                    <option value="مالك مطعم">مالك مطعم</option>
-                                                    <option value="ممنوح فرانشايز">ممنوح فرانشايز</option>
-                                                    <option value="مانح فرانشايز">مانح فرانشايز</option>
-                                                    <option value="عملت كموظف">عملت كموظف</option>
-                                                    <option value="أخرى:">أخرى</option>
+                                                    <option value="">{t('exp_placeholder')}</option>
+                                                    <option value="مالك مطعم">{t('exp_owner')}</option>
+                                                    <option value="ممنوح فرانشايز">{t('exp_franchisee')}</option>
+                                                    <option value="مانح فرانشايز">{t('exp_franchisor')}</option>
+                                                    <option value="عملت كموظف">{t('exp_employee')}</option>
+                                                    <option value="أخرى:">{t('exp_other')}</option>
                                                 </select>
                                             </div>
                                             <div className="space-y-2">
-                                                <label className="text-sm font-bold text-stone-700">متى تكون جاهز؟</label>
+                                                <label className="text-sm font-bold text-stone-700">{t('readiness')}</label>
                                                 <select
                                                     name="readiness"
                                                     value={formData.readiness}
@@ -353,17 +362,17 @@ export default function Franchise() {
                                                     required
                                                     className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none"
                                                 >
-                                                    <option value="">اختر الفترة...</option>
-                                                    <option value="في الحال">في الحال</option>
-                                                    <option value="٣ أشهر الى ٦ أشهر">٣ أشهر الى ٦ أشهر</option>
-                                                    <option value="٦ أشهر الى سنة">٦ أشهر الى سنة</option>
+                                                    <option value="">{t('read_placeholder')}</option>
+                                                    <option value="في الحال">{t('read_now')}</option>
+                                                    <option value="٣ أشهر الى ٦ أشهر">{t('read_3_6')}</option>
+                                                    <option value="٦ أشهر الى سنة">{t('read_6_12')}</option>
                                                 </select>
                                             </div>
                                         </div>
 
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                             <div className="space-y-2">
-                                                <label className="text-sm font-bold text-stone-700">معلومات إضافية</label>
+                                                <label className="text-sm font-bold text-stone-700">{t('additional_info')}</label>
                                                 <textarea
                                                     name="additionalInfo"
                                                     value={formData.additionalInfo}
@@ -374,7 +383,7 @@ export default function Franchise() {
                                             </div>
 
                                             <div className="space-y-2">
-                                                <label className="text-sm font-bold text-stone-700">أسئلة أو استفسارات</label>
+                                                <label className="text-sm font-bold text-stone-700">{t('questions')}</label>
                                                 <textarea
                                                     name="questions"
                                                     value={formData.questions}
@@ -391,14 +400,14 @@ export default function Franchise() {
                                                 onClick={() => setStep(1)}
                                                 className="w-1/3 bg-stone-200 hover:bg-stone-300 text-stone-800 font-bold py-4 rounded-xl transition-all"
                                             >
-                                                السابق
+                                                {t('prev_btn')}
                                             </button>
                                             <button
                                                 type="submit"
                                                 disabled={formStatus === "submitting"}
                                                 className="w-2/3 bg-brand hover:bg-brand/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-brand/20 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                                             >
-                                                {formStatus === "submitting" ? "جاري الإرسال..." : "إرسال طلب الامتياز"}
+                                                {formStatus === "submitting" ? t('submitting_btn') : t('submit_btn')}
                                             </button>
                                         </div>
                                     </motion.div>

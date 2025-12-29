@@ -17,13 +17,16 @@ export async function getCities() {
     }
 }
 
+
 export async function createCity(formData) {
     try {
-        const name = formData.get('name')
+        const name_ar = formData.get('name_ar')
+        const name_en = formData.get('name_en')
 
         await prisma.city.create({
             data: {
-                name,
+                name_ar,
+                name_en,
             },
         })
 
@@ -38,12 +41,14 @@ export async function createCity(formData) {
 
 export async function updateCity(id, formData) {
     try {
-        const name = formData.get('name')
+        const name_ar = formData.get('name_ar')
+        const name_en = formData.get('name_en')
 
         await prisma.city.update({
             where: { id },
             data: {
-                name,
+                name_ar,
+                name_en,
             },
         })
 

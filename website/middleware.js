@@ -1,16 +1,9 @@
-import { NextResponse } from 'next/server';
+import createMiddleware from 'next-intl/middleware';
+import { routing } from './routing';
 
-export function middleware(request) {
-    // Check if accessing dashboard routes
-    if (request.nextUrl.pathname.startsWith('/dashboard')) {
-        // In a real app, check for proper auth token/session
-        // For now, we'll let the client-side handle it
-        return NextResponse.next();
-    }
-
-    return NextResponse.next();
-}
+export default createMiddleware(routing);
 
 export const config = {
-    matcher: '/dashboard/:path*',
+    // Match only internationalized pathnames
+    matcher: ['/', '/(ar|en)/:path*']
 };

@@ -1,7 +1,6 @@
 "use client";
 
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { Link, usePathname, useRouter } from '@/navigation';
 import { LayoutDashboard, Menu, MapPin, FileText, LogOut, Building, Image, Store, Tag, GalleryHorizontal, Smartphone } from 'lucide-react';
 import DashboardAuth from './DashboardAuth';
 

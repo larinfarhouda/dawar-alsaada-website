@@ -1,63 +1,73 @@
 "use client";
 
-import { Facebook, Instagram, Twitter, MapPin, Phone, Mail } from "lucide-react";
+import { Instagram, MapPin, Phone, Mail, Linkedin } from "lucide-react";
+import { useTranslations } from 'next-intl';
 
 export default function Footer() {
+    const t = useTranslations('Footer');
+    const tNav = useTranslations('Navbar');
+
     return (
         <footer id="contact" className="bg-stone-900 text-stone-300 py-16">
             <div className="container mx-auto px-4 md:px-8">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-12 text-right">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-12 text-start">
 
                     {/* Brand */}
                     <div className="md:col-span-1">
-                        <div className="w-24 h-24 mb-4 ml-auto md:ml-0">
+                        <div className="w-24 h-24 mb-4">
                             <img src="/logo.png" alt="Dawar Al Saada Logo" className="object-contain w-full h-full" />
                         </div>
                         <p className="text-stone-400 leading-relaxed mb-6">
-                            اللي يحبه قلبك.. من زان فطوره زانت اموره.
+                            {t('slogan')}
                         </p>
-                        <div className="flex gap-4 justify-end md:justify-start">
-                            <a href="#" className="bg-stone-800 p-2 rounded-full hover:bg-brand hover:text-white transition-colors"><Instagram size={20} /></a>
-                            <a href="#" className="bg-stone-800 p-2 rounded-full hover:bg-brand hover:text-white transition-colors"><Twitter size={20} /></a>
-                            <a href="#" className="bg-stone-800 p-2 rounded-full hover:bg-brand hover:text-white transition-colors"><Facebook size={20} /></a>
+                        <div className="flex gap-4 justify-start">
+                            <a href="https://www.instagram.com/dawar_sa/" className="bg-stone-800 p-2 rounded-full hover:bg-brand hover:text-white transition-colors"><Instagram size={20} /></a>
+                            <a href="https://x.com/dawar_sa1" className="bg-stone-800 p-2 rounded-full hover:bg-brand hover:text-white transition-colors">
+                                {/* X (Twitter) Logo */}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
+                                </svg>
+                            </a>
+                            <a href="https://www.linkedin.com/company/dawar-al-saadah/" className="bg-stone-800 p-2 rounded-full hover:bg-brand hover:text-white transition-colors"><Linkedin size={20} /></a>
                         </div>
                     </div>
 
                     {/* Quick Links */}
                     <div>
-                        <h4 className="text-xl font-bold text-white mb-6">روابط سريعة</h4>
+                        <h4 className="text-xl font-bold text-white mb-6">{t('quick_links')}</h4>
                         <ul className="space-y-3">
-                            <li><a href="#hero" className="hover:text-brand transition-colors">الرئيسية</a></li>
-                            <li><a href="#about" className="hover:text-brand transition-colors">من نحن</a></li>
-                            <li><a href="#menu" className="hover:text-brand transition-colors">قائمة الطعام</a></li>
-                            <li><a href="#branches" className="hover:text-brand transition-colors">الفروع</a></li>
-                            <li><a href="#franchise" className="hover:text-brand transition-colors">الامتياز التجاري</a></li>
-                            <li><a href="#careers" className="hover:text-brand transition-colors">وظائف</a></li>
-                            <li><a href="#contact" className="hover:text-brand transition-colors">تواصل معنا</a></li>
+                            <li><a href="#hero" className="hover:text-brand transition-colors">{tNav('home')}</a></li>
+                            <li><a href="#about" className="hover:text-brand transition-colors">{tNav('about')}</a></li>
+                            {/* <li><a href="#menu" className="hover:text-brand transition-colors">قائمة الطعام</a></li> */}
+                            <li><a href="#branches" className="hover:text-brand transition-colors">{tNav('branches')}</a></li>
+                            <li><a href="#franchise" className="hover:text-brand transition-colors">{tNav('franchise')}</a></li>
+                            <li><a href="#careers" className="hover:text-brand transition-colors">{tNav('careers')}</a></li>
+                            {/* <li><a href="#contact" className="hover:text-brand transition-colors">{tNav('contact')}</a></li> */}
                         </ul>
                     </div>
 
                     {/* Opening Hours */}
                     <div>
-                        <h4 className="text-xl font-bold text-white mb-6">ساعات السعادة</h4>
+                        <h4 className="text-xl font-bold text-white mb-6">{t('hours_title')}</h4>
                         <ul className="space-y-3">
+
                             <li className="flex justify-between">
-                                <span>يومياً</span>
-                                <span className="text-white">من ٤:٠٠ فجراً</span>
+                                <span>{t('daily')}</span>
+                                <span className="text-white">{t('daily_time')}</span>
                             </li>
                             <li className="flex justify-between">
-                                <span>خدمة العملاء</span>
-                                <span className="text-white">٨:٠٠ ص - ٥:٠٠ م</span>
+                                <span>{t('customer_service')}</span>
+                                <span className="text-white">{t('cs_time')}</span>
                             </li>
                         </ul>
                     </div>
                     {/* Contact Info */}
                     <div>
-                        <h4 className="text-xl font-bold text-white mb-6">تواصل معنا</h4>
+                        <h4 className="text-xl font-bold text-white mb-6">{t('contact_us')}</h4>
                         <ul className="space-y-4">
                             <li className="flex items-start gap-3 justify-start">
                                 <MapPin className="text-brand mt-1 shrink-0" size={20} />
-                                <span className="text-right">الرياض، المملكة العربية السعودية</span>
+                                <span>{t('address')}</span>
                             </li>
                             <li className="flex items-center gap-3 justify-start">
                                 <Phone className="text-brand shrink-0" size={20} />
@@ -73,7 +83,7 @@ export default function Footer() {
                 </div>
 
                 <div className="border-t border-stone-800 mt-16 pt-8 text-center text-stone-500 text-sm">
-                    <p>© {new Date().getFullYear()} دوار السعاده. جميع الحقوق محفوظة.</p>
+                    <p>{t('copyright', { year: new Date().getFullYear() })}</p>
                 </div>
             </div>
         </footer>

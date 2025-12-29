@@ -29,7 +29,7 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-stone-900 via-stone-800 to-brand flex items-center justify-center p-4" dir="rtl">
+        <div className="min-h-screen bg-stone-900 flex items-center justify-center p-4" dir="rtl">
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-5 bg-[url('https://www.transparenttextures.com/patterns/food.png')]"></div>
 
@@ -89,7 +89,7 @@ export default function LoginPage() {
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full bg-gradient-to-r from-brand to-amber-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-brand/30 hover:shadow-xl hover:scale-[1.02] transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                            className="w-full bg-brand text-white font-bold py-4 rounded-xl shadow-lg shadow-brand/30 hover:shadow-xl hover:scale-[1.02] transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                         >
                             <span>{isLoading ? 'جاري تسجيل الدخول...' : 'تسجيل الدخول'}</span>
                             <ArrowLeft size={20} className="rotate-180" />

@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { writeFile, unlink } from "fs/promises";
 import path from "path";
 
+
 export async function getAppPromo() {
     try {
         let promo = await prisma.appPromo.findFirst();
@@ -13,9 +14,9 @@ export async function getAppPromo() {
             // Create default if not exists
             promo = await prisma.appPromo.create({
                 data: {
-                    title: "حمل التطبيق الآن",
-                    subtitle: "واستمتع بعروض حصرية",
-                    description: "اطلب طعامك المفضل بكل سهولة، تتبع طلبك لحظة بلحظة، واحصل على نقاط ولاء مع كل طلب. تجربة طعام فريدة بين يديك.",
+                    title_ar: "حمل التطبيق الآن",
+                    subtitle_ar: "واستمتع بعروض حصرية",
+                    description_ar: "اطلب طعامك المفضل بكل سهولة، تتبع طلبك لحظة بلحظة، واحصل على نقاط ولاء مع كل طلب. تجربة طعام فريدة بين يديك.",
                     appStoreLink: "#",
                     googlePlayLink: "#",
                     phoneImage: "/app-mockup.png",
@@ -34,16 +35,22 @@ export async function getAppPromo() {
 export async function updateAppPromo(formData) {
     try {
         const id = parseInt(formData.get("id"));
-        const title = formData.get("title");
-        const subtitle = formData.get("subtitle");
-        const description = formData.get("description");
+        const title_ar = formData.get("title_ar");
+        const title_en = formData.get("title_en");
+        const subtitle_ar = formData.get("subtitle_ar");
+        const subtitle_en = formData.get("subtitle_en");
+        const description_ar = formData.get("description_ar");
+        const description_en = formData.get("description_en");
         const appStoreLink = formData.get("appStoreLink");
         const googlePlayLink = formData.get("googlePlayLink");
 
         const dataToUpdate = {
-            title,
-            subtitle,
-            description,
+            title_ar,
+            title_en,
+            subtitle_ar,
+            subtitle_en,
+            description_ar,
+            description_en,
             appStoreLink,
             googlePlayLink,
         };

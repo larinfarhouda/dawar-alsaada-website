@@ -14,19 +14,26 @@ export async function getBranches() {
     }
 }
 
+
 export async function createBranch(formData) {
-    const city = formData.get('city');
-    const name = formData.get('name');
-    const address = formData.get('address');
+    const city_ar = formData.get('city_ar');
+    const city_en = formData.get('city_en');
+    const name_ar = formData.get('name_ar');
+    const name_en = formData.get('name_en');
+    const address_ar = formData.get('address_ar');
+    const address_en = formData.get('address_en');
     const link = formData.get('link');
     const phone = formData.get('phone');
 
     try {
         await prisma.branch.create({
             data: {
-                city,
-                name,
-                address,
+                city_ar,
+                city_en,
+                name_ar,
+                name_en,
+                address_ar,
+                address_en,
                 link,
                 phone,
             },
@@ -53,9 +60,12 @@ export async function deleteBranch(id) {
 }
 
 export async function updateBranch(id, formData) {
-    const city = formData.get('city');
-    const name = formData.get('name');
-    const address = formData.get('address');
+    const city_ar = formData.get('city_ar');
+    const city_en = formData.get('city_en');
+    const name_ar = formData.get('name_ar');
+    const name_en = formData.get('name_en');
+    const address_ar = formData.get('address_ar');
+    const address_en = formData.get('address_en');
     const link = formData.get('link');
     const phone = formData.get('phone');
 
@@ -63,9 +73,12 @@ export async function updateBranch(id, formData) {
         await prisma.branch.update({
             where: { id },
             data: {
-                city,
-                name,
-                address,
+                city_ar,
+                city_en,
+                name_ar,
+                name_en,
+                address_ar,
+                address_en,
                 link,
                 phone,
             },

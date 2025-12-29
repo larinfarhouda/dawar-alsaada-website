@@ -15,13 +15,15 @@ export async function getCategories() {
     }
 }
 
+
 export async function createCategory(formData) {
     try {
-        const name = formData.get('name');
+        const name_ar = formData.get('name_ar');
+        const name_en = formData.get('name_en');
 
         // Check if category already exists
         const existing = await prisma.category.findUnique({
-            where: { name }
+            where: { name_ar }
         });
 
         if (existing) {
@@ -29,7 +31,7 @@ export async function createCategory(formData) {
         }
 
         await prisma.category.create({
-            data: { name },
+            data: { name_ar, name_en },
         });
 
         revalidatePath('/dashboard/categories');
@@ -42,12 +44,13 @@ export async function createCategory(formData) {
 
 export async function updateCategory(id, formData) {
     try {
-        const name = formData.get('name');
+        const name_ar = formData.get('name_ar');
+        const name_en = formData.get('name_en');
 
         // Check if name is taken by another category
         const existing = await prisma.category.findFirst({
             where: {
-                name,
+                name_ar,
                 NOT: { id }
             }
         });
@@ -58,7 +61,7 @@ export async function updateCategory(id, formData) {
 
         await prisma.category.update({
             where: { id },
-            data: { name },
+            data: { name_ar, name_en },
         });
 
         revalidatePath('/dashboard/categories');

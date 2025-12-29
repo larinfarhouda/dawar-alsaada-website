@@ -10,42 +10,50 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
 model Category {
   id        Int        @id @default(autoincrement())
-  name      String     @unique
+  name_ar   String     @unique
+  name_en   String?
   items     MenuItem[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
 }
 
 model MenuItem {
-  id          Int      @id @default(autoincrement())
-  name        String
-  description String
-  price       String
-  image       String
-  rating      Float
-  popular     Boolean  @default(false)
-  categoryId  Int?
-  category    Category? @relation(fields: [categoryId], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id             Int      @id @default(autoincrement())
+  name_ar        String
+  name_en        String?
+  description_ar String
+  description_en String?
+  price          String
+  image          String
+  rating         Float
+  popular        Boolean  @default(false)
+  categoryId     Int?
+  category       Category? @relation(fields: [categoryId], references: [id])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
 
 model Branch {
-  id        Int      @id @default(autoincrement())
-  city      String
-  name      String
-  address   String
-  link      String
-  phone     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         Int      @id @default(autoincrement())
+  city_ar    String
+  city_en    String?
+  name_ar    String
+  name_en    String?
+  address_ar String
+  address_en String?
+  link       String
+  phone      String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model City {
   id        Int      @id @default(autoincrement())
-  name      String   @unique
+  name_ar   String   @unique
+  name_en   String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -55,6 +63,7 @@ model JobApplication {
   name      String
   phone     String
   email     String
+  city      String
   position  String
   cvUrl     String?
   status    String   @default("New")
@@ -106,9 +115,12 @@ model AboutStaticImage {
 
 model AppPromo {
   id              Int      @id @default(autoincrement())
-  title           String   @db.Text
-  subtitle        String   @db.Text
-  description     String   @db.Text
+  title_ar        String   @db.Text
+  title_en        String?  @db.Text
+  subtitle_ar     String   @db.Text
+  subtitle_en     String?  @db.Text
+  description_ar  String   @db.Text
+  description_en  String?  @db.Text
   appStoreLink    String   @default("#")
   googlePlayLink  String   @default("#")
   phoneImage      String

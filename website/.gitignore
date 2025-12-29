@@ -45,3 +45,7 @@ next-env.d.ts
 # Deployment Keys
 github_deploy_key
 github_deploy_key.pub
+
+# local debug
+debug-log.txt
+debug-db.js

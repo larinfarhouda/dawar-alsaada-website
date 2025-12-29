@@ -101,24 +101,24 @@ export async function createFranchiseRequest(formData) {
                 x_studio_selection_field_6b_1jd332n35: readiness, // متى تكون جاهز
 
                 x_studio_char_field_656_1jd334ktm: additionalInfo, // معلومات اضافية
-                x_studio_char_field_988_1jd334rge: questions, // أسئلة
+                x_studio_char_field_988_1jd334rge: questions // أسئلة
 
-                reason: `
-الاسم: ${name}
-رقم الجوال: ${phone}
-البريد الإلكتروني: ${email}
-المهنة: ${profession}
-العمر: ${age}
-المدينة: ${city}
-مصدر الاستثمار: ${investmentSource}
-اسم الشركة: ${companyName || '-'}
-نشاط الشركة: ${companyActivity || '-'}
-رابط الموقع: ${locationLink || '-'}
-الخبرة: ${experience}
-الجاهزية: ${readiness}
-معلومات إضافية: ${additionalInfo || '-'}
-أسئلة: ${questions || '-'}
-                `.trim()
+                //                 reason: `
+                // الاسم: ${name}
+                // رقم الجوال: ${phone}
+                // البريد الإلكتروني: ${email}
+                // المهنة: ${profession}
+                // العمر: ${age}
+                // المدينة: ${city}
+                // مصدر الاستثمار: ${investmentSource}
+                // اسم الشركة: ${companyName || '-'}
+                // نشاط الشركة: ${companyActivity || '-'}
+                // رابط الموقع: ${locationLink || '-'}
+                // الخبرة: ${experience}
+                // الجاهزية: ${readiness}
+                // معلومات إضافية: ${additionalInfo || '-'}
+                // أسئلة: ${questions || '-'}
+                //                 `.trim()
             });
             console.log("Odoo Approval Request Created ID:", newRequestId);
         } else {

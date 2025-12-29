@@ -63,8 +63,8 @@ export default function AppPromoPage() {
             {message.text && (
                 <div
                     className={`mb-6 p-4 rounded-lg ${message.type === "success"
-                            ? "bg-green-100 text-green-800"
-                            : "bg-red-100 text-red-800"
+                        ? "bg-green-100 text-green-800"
+                        : "bg-red-100 text-red-800"
                         }`}
                 >
                     {message.text}
@@ -83,44 +83,95 @@ export default function AppPromoPage() {
                         النصوص والمحتوى
                     </h2>
 
-                    <div className="space-y-4">
-                        <div>
-                            <label className="block text-sm font-medium text-stone-700 mb-1">
-                                العنوان الرئيسي
-                            </label>
-                            <input
-                                type="text"
-                                name="title"
-                                defaultValue={data?.title}
-                                className="w-full px-4 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-brand focus:border-transparent"
-                                required
-                            />
+
+                    <div className="grid md:grid-cols-2 gap-6">
+                        {/* Arabic Content */}
+                        <div className="space-y-4">
+                            <h3 className="font-bold text-stone-600 border-b pb-2">المحتوى العربي</h3>
+                            <div>
+                                <label className="block text-sm font-medium text-stone-700 mb-1">
+                                    العنوان الرئيسي (بالعربي)
+                                </label>
+                                <input
+                                    type="text"
+                                    name="title_ar"
+                                    defaultValue={data?.title_ar}
+                                    className="w-full px-4 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-brand focus:border-transparent"
+                                    required
+                                    dir="rtl"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-stone-700 mb-1">
+                                    العنوان الفرعي (بالعربي - أصفر)
+                                </label>
+                                <input
+                                    type="text"
+                                    name="subtitle_ar"
+                                    defaultValue={data?.subtitle_ar}
+                                    className="w-full px-4 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-brand focus:border-transparent"
+                                    required
+                                    dir="rtl"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-stone-700 mb-1">
+                                    الوصف (بالعربي)
+                                </label>
+                                <textarea
+                                    name="description_ar"
+                                    defaultValue={data?.description_ar}
+                                    rows={4}
+                                    className="w-full px-4 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-brand focus:border-transparent resize-none"
+                                    required
+                                    dir="rtl"
+                                />
+                            </div>
                         </div>
 
-                        <div>
-                            <label className="block text-sm font-medium text-stone-700 mb-1">
-                                العنوان الفرعي (باللون الأصفر)
-                            </label>
-                            <input
-                                type="text"
-                                name="subtitle"
-                                defaultValue={data?.subtitle}
-                                className="w-full px-4 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-brand focus:border-transparent"
-                                required
-                            />
-                        </div>
+                        {/* English Content */}
+                        <div className="space-y-4">
+                            <h3 className="font-bold text-stone-600 border-b pb-2">المحتوى الإنجليزي (English)</h3>
+                            <div>
+                                <label className="block text-sm font-medium text-stone-700 mb-1">
+                                    Main Title (English)
+                                </label>
+                                <input
+                                    type="text"
+                                    name="title_en"
+                                    defaultValue={data?.title_en}
+                                    className="w-full px-4 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-brand focus:border-transparent"
+                                    dir="ltr"
+                                />
+                            </div>
 
-                        <div>
-                            <label className="block text-sm font-medium text-stone-700 mb-1">
-                                الوصف
-                            </label>
-                            <textarea
-                                name="description"
-                                defaultValue={data?.description}
-                                rows={4}
-                                className="w-full px-4 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-brand focus:border-transparent resize-none"
-                                required
-                            />
+                            <div>
+                                <label className="block text-sm font-medium text-stone-700 mb-1">
+                                    Subtitle (English - Yellow)
+                                </label>
+                                <input
+                                    type="text"
+                                    name="subtitle_en"
+                                    defaultValue={data?.subtitle_en}
+                                    className="w-full px-4 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-brand focus:border-transparent"
+                                    dir="ltr"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-stone-700 mb-1">
+                                    Description (English)
+                                </label>
+                                <textarea
+                                    name="description_en"
+                                    defaultValue={data?.description_en}
+                                    rows={4}
+                                    className="w-full px-4 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-brand focus:border-transparent resize-none"
+                                    dir="ltr"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
