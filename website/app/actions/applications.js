@@ -48,24 +48,28 @@ export async function createApplication(formData) {
         if (cvFile && cvFile.size > 0) {
             const bytes = await cvFile.arrayBuffer();
             cvBuffer = Buffer.from(bytes);
-            const buffer = cvBuffer;
 
-            // Create unique filename
-            const timestamp = Date.now();
-            const ext = path.extname(cvFile.name);
-            const filename = `cv-${timestamp}${ext}`;
-            const filepath = path.join(process.cwd(), 'public', 'cvs', filename);
+            // Only save to local filesystem in development
+            if (process.env.NODE_ENV === 'development') {
+                const buffer = cvBuffer;
 
-            // Create directory if it doesn't exist
-            const fs = require('fs');
-            const dir = path.join(process.cwd(), 'public', 'cvs');
-            if (!fs.existsSync(dir)) {
-                fs.mkdirSync(dir, { recursive: true });
+                // Create unique filename
+                const timestamp = Date.now();
+                const ext = path.extname(cvFile.name);
+                const filename = `cv-${timestamp}${ext}`;
+                const filepath = path.join(process.cwd(), 'public', 'cvs', filename);
+
+                // Create directory if it doesn't exist
+                const fs = require('fs');
+                const dir = path.join(process.cwd(), 'public', 'cvs');
+                if (!fs.existsSync(dir)) {
+                    fs.mkdirSync(dir, { recursive: true });
+                }
+
+                // Save file
+                await writeFile(filepath, buffer);
+                cvUrl = `/cvs/${filename}`;
             }
-
-            // Save file
-            await writeFile(filepath, buffer);
-            cvUrl = `/cvs/${filename}`;
         }
 
         await prisma.jobApplication.create({
