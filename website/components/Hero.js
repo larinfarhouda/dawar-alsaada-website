@@ -91,7 +91,7 @@ export default function Hero({ media }) {
             />
           </motion.div>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-white mb-6 sm:mb-8 leading-tight tracking-tight px-2">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 sm:mb-8 leading-tight tracking-tight px-2">
             {/* {t('title_part1')} <br /> */}
 
             <span className="text-white">

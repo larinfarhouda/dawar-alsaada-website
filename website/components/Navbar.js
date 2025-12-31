@@ -55,7 +55,7 @@ export default function Navbar() {
             <div className="container mx-auto px-4 md:px-8 flex justify-between items-center relative">
 
                 <Link href="/" className="flex items-center gap-2 group">
-                    <div className="relative w-24 h-24">
+                    <div className="relative w-28 h-28">
                         <img src="/logo.png" alt="Dawar Al Saada Logo" className="object-contain w-full h-full" />
                     </div>
                 </Link>
