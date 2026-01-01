@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import { useRouter, Link } from '@/navigation';
 import { Lock, User, ArrowLeft } from 'lucide-react';
 
 export default function LoginPage() {
