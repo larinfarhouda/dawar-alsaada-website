@@ -13,11 +13,6 @@ export default function AboutCarouselPage() {
     const [message, setMessage] = useState({ type: '', text: '' });
     const [viewingImage, setViewingImage] = useState(null);
 
-    useEffect(() => {
-        loadImages();
-        loadStaticImages();
-    }, []);
-
     async function loadImages() {
         setLoading(true);
         const result = await getAboutCarouselImages();
@@ -33,6 +28,13 @@ export default function AboutCarouselPage() {
             setStaticImages(result.data);
         }
     }
+
+    useEffect(() => {
+        // eslint-disable-next-line
+        loadImages();
+        // eslint-disable-next-line
+        loadStaticImages();
+    }, []);
 
     async function handleStaticUpload(e, position) {
         e.preventDefault();
@@ -109,7 +111,7 @@ export default function AboutCarouselPage() {
 
     return (
         <div className="p-6">
-            <h1 className="text-3xl font-bold text-stone-800 mb-6">إدارة صور "عن دوار السعادة"</h1>
+            <h1 className="text-3xl font-bold text-stone-800 mb-6">إدارة صور &quot;عن دوار السعادة&quot;</h1>
 
             {/* Message */}
             {message.text && (

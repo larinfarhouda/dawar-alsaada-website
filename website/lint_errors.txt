@@ -1,0 +1,173 @@
+
+> website@0.1.0 lint
+> eslint
+
+
+/Users/larin/Dawar/website/app/[locale]/dashboard/about-carousel/page.js
+   17:9   error    Error: Cannot access variable before it is declared
+
+`loadImages` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+  15 |
+  16 |     useEffect(() => {
+> 17 |         loadImages();
+     |         ^^^^^^^^^^ `loadImages` accessed before it is declared
+  18 |         loadStaticImages();
+  19 |     }, []);
+  20 |
+
+  19 |     }, []);
+  20 |
+> 21 |     async function loadImages() {
+     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 22 |         setLoading(true);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 23 |         const result = await getAboutCarouselImages();
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 24 |         if (result.success) {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 25 |             setImages(result.data);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 26 |         }
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 27 |         setLoading(false);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 28 |     }
+     | ^^^^^^ `loadImages` is declared here
+  29 |
+  30 |     async function loadStaticImages() {
+  31 |         const result = await getAboutStaticImages();                                 react-hooks/immutability
+   18:9   error    Error: Cannot access variable before it is declared
+
+`loadStaticImages` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+  16 |     useEffect(() => {
+  17 |         loadImages();
+> 18 |         loadStaticImages();
+     |         ^^^^^^^^^^^^^^^^ `loadStaticImages` accessed before it is declared
+  19 |     }, []);
+  20 |
+  21 |     async function loadImages() {
+
+  28 |     }
+  29 |
+> 30 |     async function loadStaticImages() {
+     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 31 |         const result = await getAboutStaticImages();
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 32 |         if (result.success) {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 33 |             setStaticImages(result.data);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 34 |         }
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 35 |     }
+     | ^^^^^^ `loadStaticImages` is declared here
+  36 |
+  37 |     async function handleStaticUpload(e, position) {
+  38 |         e.preventDefault();  react-hooks/immutability
+  112:78  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              react/no-unescaped-entities
+  112:94  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              react/no-unescaped-entities
+  131:33  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @next/next/no-img-element
+  157:33  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @next/next/no-img-element
+  232:37  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @next/next/no-img-element
+  280:25  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @next/next/no-img-element
+
+/Users/larin/Dawar/website/app/[locale]/dashboard/app-promo/page.js
+  15:9  error  Error: Cannot access variable before it is declared
+
+`loadData` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+  13 |
+  14 |     useEffect(() => {
+> 15 |         loadData();
+     |         ^^^^^^^^ `loadData` accessed before it is declared
+  16 |     }, []);
+  17 |
+  18 |     async function loadData() {
+
+  16 |     }, []);
+  17 |
+> 18 |     async function loadData() {
+     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 19 |         setLoading(true);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 20 |         const result = await getAppPromo();
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 21 |         if (result.success) {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 22 |             setData(result.data);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 23 |         } else {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 24 |             setMessage({ type: "error", text: "فشل تحميل البيانات" });
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 25 |         }
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 26 |         setLoading(false);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 27 |     }
+     | ^^^^^^ `loadData` is declared here
+  28 |
+  29 |     async function handleSubmit(e) {
+  30 |         e.preventDefault();  react-hooks/immutability
+
+/Users/larin/Dawar/website/app/[locale]/dashboard/hero/page.js
+   15:9   error    Error: Cannot access variable before it is declared
+
+`loadMedia` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+  13 |
+  14 |     useEffect(() => {
+> 15 |         loadMedia();
+     |         ^^^^^^^^^ `loadMedia` accessed before it is declared
+  16 |     }, []);
+  17 |
+  18 |     async function loadMedia() {
+
+  16 |     }, []);
+  17 |
+> 18 |     async function loadMedia() {
+     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 19 |         setLoading(true);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 20 |         const result = await getHeroMedia();
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 21 |         if (result.success) {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 22 |             setMedia(result.data);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 23 |         }
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 24 |         setLoading(false);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 25 |     }
+     | ^^^^^^ `loadMedia` is declared here
+  26 |
+  27 |     async function handleUpload(e) {
+  28 |         e.preventDefault();  react-hooks/immutability
+  155:41  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @next/next/no-img-element
+  228:29  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @next/next/no-img-element
+
+/Users/larin/Dawar/website/app/[locale]/dashboard/menu/MenuManager.js
+  82:33  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/larin/Dawar/website/app/[locale]/login/page.js
+  108:21  error  Do not use an `<a>` element to navigate to `/`. Use `<Link />` from `next/link` instead. See: https://nextjs.org/docs/messages/no-html-link-for-pages  @next/next/no-html-link-for-pages
+
+/Users/larin/Dawar/website/components/About.js
+  147:33  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  155:33  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  191:33  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/larin/Dawar/website/components/Footer.js
+  18:29  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/larin/Dawar/website/components/MenuHighlights.js
+  59:33  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/larin/Dawar/website/components/Navbar.js
+  59:25  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+✖ 20 problems (7 errors, 13 warnings)
+

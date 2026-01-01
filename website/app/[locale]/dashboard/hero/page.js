@@ -11,10 +11,6 @@ export default function HeroMediaPage() {
     const [message, setMessage] = useState({ type: '', text: '' });
     const [viewingMedia, setViewingMedia] = useState(null);
 
-    useEffect(() => {
-        loadMedia();
-    }, []);
-
     async function loadMedia() {
         setLoading(true);
         const result = await getHeroMedia();
@@ -23,6 +19,11 @@ export default function HeroMediaPage() {
         }
         setLoading(false);
     }
+
+    useEffect(() => {
+        // eslint-disable-next-line
+        loadMedia();
+    }, []);
 
     async function handleUpload(e) {
         e.preventDefault();

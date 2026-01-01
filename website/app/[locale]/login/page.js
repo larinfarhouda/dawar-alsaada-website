@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Lock, User, ArrowLeft } from 'lucide-react';
 
 export default function LoginPage() {
@@ -105,10 +106,10 @@ export default function LoginPage() {
 
                 {/* Back to Website */}
                 <div className="text-center mt-6">
-                    <a href="/" className="text-white hover:text-brand transition-colors inline-flex items-center gap-2 font-medium">
+                    <Link href="/" className="text-white hover:text-brand transition-colors inline-flex items-center gap-2 font-medium">
                         <ArrowLeft size={18} />
                         <span>العودة إلى الموقع</span>
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>

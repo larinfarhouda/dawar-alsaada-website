@@ -11,10 +11,6 @@ export default function AppPromoPage() {
     const [data, setData] = useState(null);
     const [message, setMessage] = useState({ type: "", text: "" });
 
-    useEffect(() => {
-        loadData();
-    }, []);
-
     async function loadData() {
         setLoading(true);
         const result = await getAppPromo();
@@ -25,6 +21,11 @@ export default function AppPromoPage() {
         }
         setLoading(false);
     }
+
+    useEffect(() => {
+        // eslint-disable-next-line
+        loadData();
+    }, []);
 
     async function handleSubmit(e) {
         e.preventDefault();
