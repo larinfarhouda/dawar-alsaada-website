@@ -75,12 +75,12 @@ export default function Footer() {
                             </li>
                             <li className="flex items-center gap-3 justify-start">
                                 <Phone className="text-brand shrink-0" size={20} />
-                                <span dir="ltr">+966 50 000 0000</span>
+                                <span dir="ltr">920016097</span>
 
                             </li>
                             <li className="flex items-center gap-3 justify-start">
                                 <Mail className="text-brand shrink-0" size={20} />
-                                <span>info@dawaralsaada.com</span>
+                                <span>Info@dawar.sa</span>
                             </li>
                         </ul>
                     </div>
